@@ -17,6 +17,41 @@ Link to the jam:[GMTK Game Jam 2023](https://itch.io/jam/gmtk-2023)
 - [Blackthornprod](https://www.youtube.com/@Blackthornprod/playlists)
 
 ### Assets
+
+#### Art
+- [OpenGameArt (2D + 3D)](https://opengameart.org/)
+- [Kenney (2D + 3D)](https://www.kenney.nl/)
+- [Game-Icons (2D)](https://game-icons.net/)
+- [Textures.com (Textures)](https://www.textures.com/)
+- [Poliigon (Textures)](https://www.poliigon.com/)
+- [Poly.pizza (3D)](https://poly.pizza/)
+- [Mixamo (Animations)](https://www.mixamo.com/#/)
+  
+#### Fonts
+- [Fontsource (Fonts)](https://fontsource.org/)
+- [Font Squirrel (Fonts)](https://www.fontsquirrel.com/)
+- [Google Fonts (Fonts)](https://fonts.google.com/)
+  
+#### Audio
+- [Incompetech - Royalty Free Music (Music)](https://artlist.io/royalty-free-music)
+- [Free Music Archive (Music)](https://freemusicarchive.org/)
+- [Freesound (SFX)](https://freesound.org/)
+- [OpenGameArt (Music + SFX)](https://opengameart.org/)
+- [Kenney (Music + SFX)](https://www.kenney.nl/)
+- [Soniss (SFX)](https://sonniss.com/)
+  
+#### Tools
+- [BitFontMaker2 (Fonts)](https://www.pentacom.jp/pentacom/bitfontmaker2/)
+- [Photopea (Art)](https://www.photopea.com/)
+- [sfxr (SFX)](https://sfxr.me/)
+- [Chiptone (SFX)](https://sfbgames.itch.io/chiptone)
+- [Bosca Ceoil (Music)](https://boscaceoil.net/)
+- [BeepBox (Music)](https://www.beepbox.co/)
+- [Lospec (Palettes)](https://lospec.com/)
+- [Easy Releasy (itch.io page designer)](https://jannikboysen.itch.io/easy-releasy)
+- [Tiny Tools (More!)](https://tinytools.site/)
+  
+#### Other
 - [Unity Asset Store](https://assetstore.unity.com/)
 - [Open Game Art](https://opengameart.org/)
 - [Itch.io Game Assets](https://itch.io/game-assets)
