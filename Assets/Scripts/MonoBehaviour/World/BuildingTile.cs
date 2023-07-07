@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "BuildingTile")]
-public class BuildingTile : TileBase
+public class BuildingTile : Tile
 {
     public string BuildingName;
     public string BuildingType;
+
+    private void Awake()
+    {
+           
+    }
 }
