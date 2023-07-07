@@ -11,10 +11,11 @@ Examples:
 ## Resources
 Link to the jam:[GMTK Game Jam 2023](https://itch.io/jam/gmtk-2023)
 
-### Tutorials.
+### Tutorials
 - [Brackey's "How to make a Video Game"](https://www.youtube.com/watch?v=j48LtUkZRjU&list=PLPV2KyIb3jR5QFsefuO2RlAgWEz6EvVi6)
 - [Game Dev Guide](https://www.youtube.com/@GameDevGuide/videos)
 - [Blackthornprod](https://www.youtube.com/@Blackthornprod/playlists)
+- [Extra Credits "Making your first Game"](https://www.youtube.com/watch?v=z06QR-tz1_o&list=PLhyKYa0YJ_5C6QC36h5eApOyXtx98ehGi)
 
 ### Assets
 
