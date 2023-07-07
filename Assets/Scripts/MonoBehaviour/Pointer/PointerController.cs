@@ -5,20 +5,16 @@ using UnityEngine;
 
 public class PointerController : MonoBehaviour
 {
+
+    static PointerController instance;
+    public static PointerController Instance { get =>  instance; }
+
     Queue<PointerAction> actionQueue = new Queue<PointerAction>();
     public PointerAction currentAction = null;
 
     private void Awake()
     {
-        var action = new PointerActionMove(null, Random.insideUnitCircle * 4);
-        var action2 = new PointerActionMove(null, Random.insideUnitCircle * 4);
-        var action3 = new PointerActionMove(null, Random.insideUnitCircle * 4);
-        var action4 = new PointerActionMove(null, Random.insideUnitCircle * 4);
-
-        actionQueue.Enqueue(action);
-        actionQueue.Enqueue(action2);
-        actionQueue.Enqueue(action3);
-        actionQueue.Enqueue(action4);
+        instance = this;
     }
 
     private void FixedUpdate()
@@ -34,6 +30,15 @@ public class PointerController : MonoBehaviour
         action.Execute(this);
         action.OnFinish += Action_OnFinish;
         currentAction = actionQueue.Dequeue();
+    }
+
+    public void QueueActions(List<PointerAction> actions)
+    {
+        if (actions == null) return;
+        foreach (var action in actions)
+        {
+            actionQueue.Enqueue(action);
+        }
     }
 
     private void Action_OnFinish()

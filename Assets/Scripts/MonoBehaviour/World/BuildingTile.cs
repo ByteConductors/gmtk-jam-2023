@@ -8,4 +8,9 @@ public class BuildingTile : Tile
 {
     public string BuildingName;
     public string BuildingType;
+
+    private void Awake()
+    {
+           
+    }
 }

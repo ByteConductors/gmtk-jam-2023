@@ -5,15 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
+    public Sprite spriteUp;
+    public Sprite spriteRight;
+
     private Vector3 velocity;
-    private Quaternion rotation;
+
+    private SpriteRenderer spriteRenderer;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         velocity = Vector3.zero;
-        rotation = new Quaternion(0, 0, 0, 1);
     }
 
     // Update is called once per frame
@@ -22,22 +26,30 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             velocity = Vector3.up;
-            rotation = Quaternion.Euler(0, 0, 180);
+            spriteRenderer.sprite = spriteUp;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             velocity = Vector3.down;
-            rotation = Quaternion.Euler(0, 0, 0);
+            spriteRenderer.sprite = spriteUp;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = true;
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
             velocity = Vector3.left;
-            rotation = Quaternion.Euler(0, 0, -90);
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             velocity = Vector3.right;
-            rotation = Quaternion.Euler(0, 0, 90);
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
         }
         if (Input.GetKeyUp(KeyCode.W) && velocity == Vector3.up)
         {
@@ -56,7 +68,6 @@ public class PlayerController : MonoBehaviour
             velocity = Vector3.zero;
         }
         transform.position += velocity * speed * Time.deltaTime;
-        transform.rotation = rotation;
     }
 }
 
