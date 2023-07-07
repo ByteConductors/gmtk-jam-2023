@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad8614fce81e1b34aa2d95514ad67508, type: 3}
-  m_Name: Tile_House_smal4
+  m_Script: {fileID: 11500000, guid: 7eebb707f5c99bc4ab2e09796cff6321, type: 3}
+  m_Name: Tile_Road_intersection_rightIn
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 382461438, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
+  m_Sprite: {fileID: -1959833896, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
