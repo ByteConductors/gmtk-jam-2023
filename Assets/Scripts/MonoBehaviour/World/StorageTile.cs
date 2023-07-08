@@ -9,6 +9,11 @@ public class StorageTile : BuildingTile,ICollisionTile
     [SerializeField]
     public BuildingResource storedResource;
 
+    public void setStoredResource(BuildingResource resource)
+    {
+        storedResource = resource;
+    }
+
     public void OnCollision() //change ressource that the player is carrying
     {
         if (PlayerController.instance == null) return;
