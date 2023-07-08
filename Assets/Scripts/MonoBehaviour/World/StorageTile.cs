@@ -16,6 +16,7 @@ public class StorageTile : BuildingTile,ICollisionTile
         // if player is already carrying a resource, do nothing
         if (PlayerController.instance.getResource() != null) return;
         PlayerController.instance.setResource(storedResource);
+        Debug.Log("Player is now carrying " + storedResource.name);
     }
 
 }
