@@ -7,17 +7,17 @@ public class PlayerController : MonoBehaviour
     public Sprite spriteUp;
     public Sprite spriteRight;
 
-    private Vector3 velocity;
+    [SerializeField] private Vector3 velocity;
 
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rb;
-
-    private Vector3 lastCollisionPoint;
-    private Vector3 forward;
-
-    private BuildingResource ressource;
-    int count;
-    int maxCarry;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Rigidbody2D rb;
+    
+    [SerializeField] private Vector3 lastCollisionPoint;
+    [SerializeField] private Vector3 forward;
+    
+    [SerializeField] private BuildingResource ressource;
+    [SerializeField] int count;
+    public int maxCarry;
 
 
 

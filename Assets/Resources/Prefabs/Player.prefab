@@ -102,6 +102,14 @@ MonoBehaviour:
   speed: 10
   spriteUp: {fileID: 1054689468, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   spriteRight: {fileID: 2123841751, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
+  velocity: {x: 0, y: 0, z: 0}
+  spriteRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  lastCollisionPoint: {x: 0, y: 0, z: 0}
+  forward: {x: 0, y: 0, z: 0}
+  ressource: {fileID: 11400000, guid: 1aa0f7e1b829c564caeeb9bfd2bff9e2, type: 2}
+  count: 0
+  maxCarry: 0
 --- !u!50 &1078902371922970262
 Rigidbody2D:
   serializedVersion: 4

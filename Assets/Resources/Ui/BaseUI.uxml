@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/Ui/BaseUI.uss?fileID=7433441132597879392&amp;guid=eca55c28e7fd14041b70f41ef3bc05e4&amp;type=3#BaseUI" />
+    <ui:VisualElement name="Container" class="nopadding" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:GroupBox name="LeftSide" class="side nopadding" style="left: 0; top: 0; position: absolute;">
+            <ui:GroupBox name="GroupBox" style="height: 25%; width: 100%; padding-top: 50px; justify-content: center; align-self: center; align-items: center;">
+                <ui:Label tabindex="-1" text="HIGHSCORE: " display-tooltip-when-elided="true" name="Highscore" class="scores slabel" style="position: absolute; left: 0; top: 0;" />
+                <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" class="scores scount" style="position: absolute; top: 0; right: 0; -unity-text-align: upper-center;" />
+                <ui:Label tabindex="-1" text="SCORE: " display-tooltip-when-elided="true" name="Score" class="scores slabel" style="position: absolute; top: 50px; left: 0; width: 75%;" />
+                <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="ScoreCount" class="scores scount" style="position: absolute; top: 50px; right: 0;" />
+            </ui:GroupBox>
+            <ui:GroupBox style="justify-content: space-between; align-self: center; width: 100%; height: 75%; align-items: stretch;">
+                <ui:VisualElement style="background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Sprites/Buildings/CityBuilderPack&apos;); -unity-background-scale-mode: stretch-to-fill; width: 100px; height: 100px; align-self: center;" />
+            </ui:GroupBox>
+        </ui:GroupBox>
+        <ui:GroupBox name="RightSide" class="side nopadding" style="position: absolute; left: auto; top: 0; right: 0;">
+            <ui:GroupBox style="margin-top: 50%; width: 100%; height: auto;">
+                <ui:Label tabindex="-1" text="Controls:" display-tooltip-when-elided="true" name="Controlls" class="scores" />
+                <ui:Label tabindex="-1" text="- Movement:" display-tooltip-when-elided="true" name="Movement" class="scores" />
+                <ui:Label tabindex="-1" text="  ° Move Up: W" class="scores" />
+                <ui:Label tabindex="-1" text="  ° Move Down: S" display-tooltip-when-elided="true" class="scores" />
+                <ui:Label tabindex="-1" text="  ° Move Left: A" display-tooltip-when-elided="true" class="scores" />
+                <ui:Label tabindex="-1" text="  ° Move Right: D" display-tooltip-when-elided="true" class="scores" />
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

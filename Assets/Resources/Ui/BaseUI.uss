@@ -1,0 +1,41 @@
+.header {
+    color: rgb(255, 0, 0);
+}
+
+.side {
+    width: 12.5%;
+    height: 100%;
+    background-color: rgb(108, 93, 93);
+}
+
+.nopadding {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.scores {
+    font-size: 20px;
+    -unity-font-style: bold;
+    margin-top: 20px;
+    margin-left: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.scount {
+    width: 25%;
+    -unity-text-align: upper-center;
+}
+
+.slabel {
+}

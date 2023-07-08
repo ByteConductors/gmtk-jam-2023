@@ -73,6 +73,7 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateTile(TileBase tile, Vector3Int position)
     {
+        buildingMap.SetTile(position, tile);
     }
 
     public bool TryGetCollisionTile(Vector3 position, out ICollisionTile tile)

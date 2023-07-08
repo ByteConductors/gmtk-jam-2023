@@ -25,13 +25,17 @@ public class ConstructionSiteTile : Tile, ICollisionTile
     public void OnCollision()
     {
         // Get the Players currently held Resource
+        Debug.Log("Getting Player resouce!");
         var resource = PlayerController.instance.getResource();
         // Check if resource is the same a required
         if (resource != buildingTile.resource) return;
         // if so, Tell the LevelManager to update the Tile
+        Debug.Log("Getting Player resouce!");
         LevelManager.Instance.UpdateTile(buildingTile, position);
         // And the GameManager to remove the Loss Timer;
+        Debug.Log("Removing Timer!");
         GameManager.Instance.RemoveTimer(position);
+        PlayerController.instance.UseResource();
         Debug.Log("Collided With Construction Tile!");
     }
 }
