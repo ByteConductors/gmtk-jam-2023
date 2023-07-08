@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Security.Principal;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,14 +23,21 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (phaseTimer < Time.time)
         {
-            SwitchPhase();
             phaseTimer = Time.time + phaseTime;
         }
     }
-    void SwitchPhase()
+
+    public void AddConstructionTimer(BuildingResource resource, float deliveryTime, ConstructionSiteTile tile)
     {
 
     }
+
+    public void OnTileCollision(TileBase tile)
+    {
+        ((ICollisionTile)tile).OnCollision();
+    }
+
 }

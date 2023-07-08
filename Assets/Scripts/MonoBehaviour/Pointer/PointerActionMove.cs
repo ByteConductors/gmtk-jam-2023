@@ -26,13 +26,9 @@ public class PointerActionMove : PointerAction
 
     public override void Update()
     {
-        Debug.Log("Updating Pointer!");
         if (controller == null) return;
-        Debug.Log("Pointer not null");
-        Debug.Log(movePos);
         if ((controller.transform.position - movePos).magnitude < threshold)
         {
-            Debug.Log("Action Finished");
             Finish();
         }
         controller.transform.position = Vector3.Lerp(controller.transform.position, movePos, Time.fixedDeltaTime * pointerSpeed);
