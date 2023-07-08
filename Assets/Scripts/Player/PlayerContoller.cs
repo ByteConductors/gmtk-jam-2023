@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Sprite spriteUp;
     public Sprite spriteRight;
+    public float extension = 0.1f;
 
     private Vector2 movement;
 
@@ -75,13 +76,17 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
         }
+        if (movement.magnitude > 0)
+        {
+            forward = movement.normalized;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * 0.5f;
-        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * 0.5f, out ICollisionTile tile))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * extension;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * extension, out ICollisionTile tile))
         {
             tile.OnCollision();
         }
