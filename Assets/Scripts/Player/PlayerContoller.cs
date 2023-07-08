@@ -78,5 +78,18 @@ public class PlayerController : MonoBehaviour
         
         transform.position += velocity * speed * Time.deltaTime;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Level")) return;
+        var tile = LevelManager.Instance.GetTileAtPosition(collision.contacts[0].point);
+        if (tile == null) return;
+        if (typeof(ICollisionTile).IsAssignableFrom(tile.GetType()))
+        {
+            ICollisionTile _t = (ICollisionTile)tile;
+            if (_t == null) return;
+            _t.OnCollision();
+        }
+    }
 }
 

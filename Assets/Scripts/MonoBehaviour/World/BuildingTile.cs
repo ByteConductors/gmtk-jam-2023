@@ -8,6 +8,8 @@ public class BuildingTile : Tile
 {
     public string BuildingName;
     public string BuildingType;
+    public BuildingResource resource;
+    public float deliveryTime;
 
     private void Awake()
     {
