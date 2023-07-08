@@ -1,29 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class BaseUi : MonoBehaviour
+public class BaseUI : MonoBehaviour
 {
-    UIDocument baseUI;
-    ProgressBar deliverTimeBar;
-    public float speed;
-
+    private UIDocument uIDocument;
+    private Label scoreCount;
+    private Label highScoreCount;
     void OnEnable()
     {
-        baseUI = GetComponent<UIDocument>();
-        if (baseUI == null )
-        {
-            Debug.Log("ERROR");
-        }
-        deliverTimeBar = baseUI.rootVisualElement.Q("DeliverTimeBar") as ProgressBar;
-        if (deliverTimeBar != null)
-        {
-            Debug.Log("Bar found");
-        }
+        uIDocument = GetComponent<UIDocument>();
+        Label highScoreCount = uIDocument.rootVisualElement.Q<Label>("HighscoreCount");
+        Label scoreCount = uIDocument.rootVisualElement.Q<Label>("ScoreCount");
+        
+
     }
-    void Update() {
-        deliverTimeBar.value += speed * Time.deltaTime;
-    }
+
 }
