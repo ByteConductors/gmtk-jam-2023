@@ -113,14 +113,17 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
     }
+    
     public ScriptableObject getResource()
     {
         return ressource;
     }
+
     public void setResource(ScriptableObject resource)
     {
         this.ressource = resource;
     }
+
     public void Awake()
     {
         if (instance != null && instance != this)
