@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,15 +7,17 @@ public class PlayerController : MonoBehaviour
     public Sprite spriteUp;
     public Sprite spriteRight;
 
-    private Vector3 velocity;
+    [SerializeField] private Vector3 velocity;
 
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rb;
-
-    private Vector3 lastCollisionPoint;
-    private Vector3 forward;
-
-    private ScriptableObject ressource;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Rigidbody2D rb;
+    
+    [SerializeField] private Vector3 lastCollisionPoint;
+    [SerializeField] private Vector3 forward;
+    
+    [SerializeField] private BuildingResource ressource;
+    [SerializeField] int count;
+    public int maxCarry;
 
 
 
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
         ressource = null;
+        maxCarry = 1;
     }
 
     // Update is called once per frame
@@ -38,14 +39,14 @@ public class PlayerController : MonoBehaviour
             velocity = Vector3.up;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
+            spriteRenderer.flipY = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
             velocity = Vector3.down;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = true;
+            spriteRenderer.flipY = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
@@ -114,14 +115,27 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
     }
     
-    public ScriptableObject getResource()
+    public BuildingResource getResource()
     {
         return ressource;
     }
 
-    public void setResource(ScriptableObject resource)
+    public void setResource(BuildingResource resource)
     {
         this.ressource = resource;
+        count = maxCarry;
+    }
+    public void UseResource()
+    {
+        if (ressource == null) return;
+        if (count == 0) return;
+        if (count == 1)
+        {
+            count = 0;
+            ressource = null;
+        }else {
+            count--;
+        }
     }
 
     public void Awake()
