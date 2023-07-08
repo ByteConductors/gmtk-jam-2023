@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Vector3 lastCollisionPoint;
     [SerializeField] private Vector3 forward;
-    
+
+    public event Action<(BuildingResource,int)> PlayerResourceUpdated;
     [SerializeField] private BuildingResource ressource;
     [SerializeField] int count;
     public int maxCarry;
@@ -124,6 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         this.ressource = resource;
         count = maxCarry;
+        PlayerResourceUpdated?.Invoke((resource, count));
     }
     public void UseResource()
     {
@@ -136,6 +139,7 @@ public class PlayerController : MonoBehaviour
         }else {
             count--;
         }
+        PlayerResourceUpdated?.Invoke((ressource, count));
     }
 
     public void Awake()

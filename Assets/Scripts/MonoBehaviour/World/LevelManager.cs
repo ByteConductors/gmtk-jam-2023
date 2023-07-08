@@ -40,10 +40,8 @@ public class LevelManager : MonoBehaviour
         instance = this;
         roadMap.SetTile(new Vector3Int(0, 0), roadTile);
         roadPositions.Add(new Vector3Int());
-        var tile = ScriptableObject.CreateInstance<StorageTile>();
+        var tile = ScriptableObject.CreateInstance<StorageTile>().CloneContents(storageTiles[0]);
         tile.Position = new Vector3Int(0, 1);
-        tile.sprite = storageTiles[0].sprite;
-        tile.storedResource = storageTiles[0].storedResource;
         buildingMap.SetTile(new Vector3Int(0, 1), tile);
         buildingPositions.Add(new Vector3Int(0,1));
         tile.OnPlace();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class StorageTile : BuildingTile,ICollisionTile
 {
     [SerializeField]
     public BuildingResource storedResource;
-
 
     public override void OnPlace()
     {
@@ -27,4 +27,17 @@ public class StorageTile : BuildingTile,ICollisionTile
         Debug.Log("Player is now carrying " + storedResource.name);
     }
 
+
+    public StorageTile CloneContents(StorageTile storageTile)
+    {
+        this.sprite = storageTile.sprite;
+        this.resource = storageTile.resource;
+        this.storedResource = storageTile.storedResource;
+        this.Position = storageTile.Position;
+        this.BuildingName = storageTile.BuildingName;
+        this.BuildingType = storageTile.BuildingType;
+        this.deliveryTime = storageTile.deliveryTime;
+        this.size = storageTile.size;
+        return this;
+    }
 }
