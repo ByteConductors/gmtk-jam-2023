@@ -63,6 +63,7 @@ public class LevelManager : MonoBehaviour
         {
             new PointerActionMove(() => {
                 buildingMap.SetTile(position, constrution);
+                constrution.OnPlace();
             }, 
                 OFFSET + position)
         };

@@ -39,3 +39,4 @@ MonoBehaviour:
   resource: {fileID: 0}
   deliveryTime: 60
   size: {x: 3, y: 1}
+  baseScore: 10

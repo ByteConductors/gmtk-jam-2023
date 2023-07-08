@@ -1,11 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Security.Principal;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
@@ -21,6 +16,8 @@ public class GameManager : MonoBehaviour
     int materials;
     bool first = true;
 
+    int score;
+    public event System.Action<int> OnScoreUpdate;
     static GameManager instance;
     public static GameManager Instance { get => instance; }
 
@@ -36,7 +33,7 @@ public class GameManager : MonoBehaviour
     public float phaseTime;
     int tries;
 
-    Dictionary<string,float> timers = new Dictionary<string,float>();
+    Dictionary<string,(BuildingTile,float)> timers = new Dictionary<string, (BuildingTile, float)>();
 
     private void Awake()
     {
@@ -119,24 +116,49 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void AddConstructionTimer(Vector3Int position, float deliveryTime)
+    public void AddConstructionTimer(Vector3Int position,BuildingTile tile, float deliveryTime)
     {
-        timers.Add(position.ToString(), Time.time + deliveryTime);
+        Debug.Log("Adding timer at:" + v3i2key(position));
+        timers.Add(v3i2key(position), (tile, Time.time + deliveryTime));
+        Debug.Log("Timer time: " + timers[v3i2key(position)].Item2);
     }
     void CheckTimer()
     {
         List<string> flagForRemoval = new List<string>();
-        foreach (string key in timers.Keys)
+        foreach (var key in timers.Keys)
         {
-            if (timers[key] < Time.time) lives -= 1;
-            flagForRemoval.Add(key);
+            if (timers[key].Item2 > Time.time) continue;
+            lives -= 1;
+            flagForRemoval.Add(key.ToString());
         }
-        foreach (var key in flagForRemoval) timers.Remove(key);
+        foreach (string key in flagForRemoval) timers.Remove(key);
     }
 
     public bool RemoveTimer(Vector3Int position)
     {
-        return timers.Remove(position.ToString());
+        string key = v3i2key(position);
+        if (!timers.ContainsKey(key))
+        {
+            Debug.Log($"Couldn't find Timer {key}, aborting.");
+            return false;
+        }
+        float timeLeft = timers[key].Item2 - Time.time;
+        uint score = (uint)(timers[key].Item1.baseScore * (timers[key].Item1.deliveryTime / timeLeft));
+        Debug.Log("Adding score: " + score);
+        AddScore(score);
+        var success = timers.Remove(key);
+        return success;
+    }
+
+    public static string v3i2key(Vector3Int position)
+    {
+        return $"{position.x};{position.y};{position.z}";
+    }
+
+    public void AddScore(uint points)
+    {
+        score += (int)points;
+        OnScoreUpdate?.Invoke(score);
     }
 
 }

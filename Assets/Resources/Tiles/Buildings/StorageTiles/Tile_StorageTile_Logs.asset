@@ -39,4 +39,5 @@ MonoBehaviour:
   resource: {fileID: 11400000, guid: 1aa0f7e1b829c564caeeb9bfd2bff9e2, type: 2}
   deliveryTime: 0
   size: {x: 2, y: 3}
+  baseScore: 20
   storedResource: {fileID: 11400000, guid: 617ed14ef3375ed4eb4c3accda939475, type: 2}

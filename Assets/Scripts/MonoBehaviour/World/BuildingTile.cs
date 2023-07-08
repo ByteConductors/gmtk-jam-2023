@@ -12,6 +12,7 @@ public class BuildingTile : Tile
     public BuildingResource resource;
     public float deliveryTime;
     public Vector2Int size;
+    public int baseScore;
     Vector3Int position;
     public Vector3Int Position { get => position; set => position = value; }
 
