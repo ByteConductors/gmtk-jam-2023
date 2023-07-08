@@ -8,8 +8,11 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Sprite spriteUp;
     public Sprite spriteRight;
+    public float extension = 0.1f;
 
     private Vector2 movement;
+
+    [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Vector3 velocity;
 
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         velocity = Vector3.zero;
         ressource = null;
         maxCarry = 4;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnMovement(InputValue value)
@@ -48,6 +52,13 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
+        if (movement.magnitude > 0)
+        {
+            if (!audioSource.isPlaying) audioSource.Play();
+        }else{
+            audioSource.Stop();
+        }
+
         if (movement.x > 0)
         {
             
@@ -75,13 +86,17 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
         }
+        if (movement.magnitude > 0)
+        {
+            forward = movement.normalized;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * 0.5f;
-        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * 0.5f, out ICollisionTile tile))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * extension;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * extension, out ICollisionTile tile))
         {
             tile.OnCollision();
         }
