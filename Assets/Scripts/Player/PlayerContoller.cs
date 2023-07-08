@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movement;
 
+    [SerializeField] private AudioSource audioSource;
+
     [SerializeField] private Vector3 velocity;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
         velocity = Vector3.zero;
         ressource = null;
         maxCarry = 4;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnMovement(InputValue value)
@@ -49,6 +52,13 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
+        if (movement.magnitude > 0)
+        {
+            if (!audioSource.isPlaying) audioSource.Play();
+        }else{
+            audioSource.Stop();
+        }
+
         if (movement.x > 0)
         {
             
