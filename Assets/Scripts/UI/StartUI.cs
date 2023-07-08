@@ -22,7 +22,7 @@ public class StartUI : MonoBehaviour
 
     private void OnStartButtonClick(ClickEvent env)
     {
-        SceneManager.LoadScene("The New UI");
+        SceneManager.LoadScene("_boot");
     }
     private void OnExitButtonClick(ClickEvent env)
     {

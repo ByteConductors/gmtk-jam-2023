@@ -12,9 +12,9 @@ public class PowerUpController : MonoBehaviour
 
     void Start()
     {
-        speedButton.onClick.AddListener(SpeedUp);
-        carryCapacityButton.onClick.AddListener(CarryCapacityUp);
-        buildSpeedButton.onClick.AddListener(BuildSpeedUp);
+        speedButton.clicked += SpeedUp;
+        carryCapacityButton.clicked += CarryCapacityUp;
+        buildSpeedButton.clicked += BuildSpeedUp;
     }
 
     void SpeedUp()

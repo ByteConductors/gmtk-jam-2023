@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     public int maxCarry;
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +46,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("soundEmitter_Idle: " + soundEmitter_Idle);
         soundEmitter_Move = SoundManager.instance.PlaySound(audioClip_Move, instance.gameObject, true, 0.2f);
         Debug.Log("soundEmitter_Move: " + soundEmitter_Move);
+    }
+
+    private void PlayerController_bnjaiosgfbij()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnMovement(InputValue value)

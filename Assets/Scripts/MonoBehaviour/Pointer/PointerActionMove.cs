@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable]
 public class PointerActionMove : PointerAction
 {
-    public const float threshold = 0.1f;
-    public const float pointerSpeed = 4f;
+    public float threshold = 0.1f;
+    public float pointerSpeed = 4f;
     public PointerController controller;
     public Vector3 movePos;
 
