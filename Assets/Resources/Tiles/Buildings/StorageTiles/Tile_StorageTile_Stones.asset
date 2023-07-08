@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587c1217db3e0b148894e7fb5f2da36f, type: 3}
   m_Name: Tile_StorageTile_Stones
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1505901969, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
+  m_Sprite: {fileID: -1798926706, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -38,5 +38,5 @@ MonoBehaviour:
   BuildingType: 
   resource: {fileID: 11400000, guid: 1aa0f7e1b829c564caeeb9bfd2bff9e2, type: 2}
   deliveryTime: 0
-  size: {x: 1, y: 3}
+  size: {x: 2, y: 3}
   storedResource: {fileID: 11400000, guid: 566d519a08c34d647ac38e5375aef84f, type: 2}

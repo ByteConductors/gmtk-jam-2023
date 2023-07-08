@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Sprite spriteUp;
     public Sprite spriteRight;
+
+    private Vector2 movement;
 
     [SerializeField] private Vector3 velocity;
 
@@ -33,63 +36,45 @@ public class PlayerController : MonoBehaviour
         maxCarry = 4;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnMovement(InputValue value)
     {
-        if (Input.GetKey(KeyCode.W))
+        movement = value.Get<Vector2>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+    }
+
+    void Update(){
+        if (movement.x > 0)
         {
-            velocity = Vector3.up;
+            
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else if (movement.x < 0)
+        {
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+            
+        }
+        else if (movement.y > 0)
+        {
+            spriteRenderer.sprite = spriteUp;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            
+        }
+        else if (movement.y < 0)
+        {
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            velocity = Vector3.down;
-            spriteRenderer.sprite = spriteUp;
-            spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            velocity = Vector3.left;
-            spriteRenderer.sprite = spriteRight;
-            spriteRenderer.flipX = true;
-            spriteRenderer.flipY = false;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            velocity = Vector3.right;
-            spriteRenderer.sprite = spriteRight;
-            spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
-        }
-        if (!Input.GetKey(KeyCode.W) && velocity == Vector3.up)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.S) && velocity == Vector3.down)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.A) && velocity == Vector3.left)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.D) && velocity == Vector3.right)
-        {
-            velocity = Vector3.zero;
-        }
-        if((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) && (velocity == Vector3.down || velocity == Vector3.up))
-        {
-            velocity = Vector3.zero;
-        }
-        if ((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) && (velocity == Vector3.left || velocity == Vector3.right))
-        {
-            velocity = Vector3.zero;
-        }
-        rb.MovePosition(transform.position + velocity * speed * Time.deltaTime);
-        if (velocity.magnitude > 0) forward = velocity.normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
