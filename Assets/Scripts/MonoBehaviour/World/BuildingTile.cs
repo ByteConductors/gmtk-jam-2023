@@ -10,6 +10,7 @@ public class BuildingTile : Tile
     public string BuildingType;
     public BuildingResource resource;
     public float deliveryTime;
+    public Vector2Int size;
 
     private void Awake()
     {
