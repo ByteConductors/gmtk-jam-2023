@@ -105,7 +105,8 @@ MonoBehaviour:
   spriteUp: {fileID: 1054689468, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   spriteRight: {fileID: 2123841751, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   extension: 0.3
-  audioSource: {fileID: -998140999365592989}
+  audioClip_Move: {fileID: 8300000, guid: 5ce5a93742bb0bc4a88ae514659f6dfd, type: 3}
+  audioClip_Idle: {fileID: 8300000, guid: c397789b6973b834cbca73133b581eab, type: 3}
   velocity: {x: 0, y: 0, z: 0}
   spriteRenderer: {fileID: 0}
   rb: {fileID: 0}
@@ -227,7 +228,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5ce5a93742bb0bc4a88ae514659f6dfd, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
