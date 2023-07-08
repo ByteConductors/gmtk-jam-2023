@@ -48,12 +48,29 @@ public class LevelManager : MonoBehaviour
         
     }
 
+    public bool TryGetCollisionTile(Vector3 position, out ICollisionTile tile)
+    {
+        Debug.Log("Trying to get Collision tile at Position: " + position.ToString());
+        var _t = GetTileAtPosition(position);
+        Debug.Log($"Tile was {(_t == null ? "found" : "not found")}!");
+        if (_t != null && typeof(ICollisionTile).IsAssignableFrom(_t.GetType()))
+        {
+            Debug.Log("Found Collision Tile");
+            tile = (ICollisionTile) _t;
+            return true;
+        }
+        Debug.Log("Did not find Collision Tile");
+        tile = null;
+        return false;
+    }
+
     public TileBase GetTileAtPosition(Vector3 position)
     {
+        Debug.Log(v3tov3i(position));
         return buildingMap.GetTile(v3tov3i(position));
     }
     Vector3Int v3tov3i(Vector3 position)
     {
-        return new Vector3Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), Mathf.RoundToInt(position.z));
+        return new Vector3Int(Mathf.RoundToInt(position.x), (int)position.y,0);
     }
 }

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,12 +10,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
 
     private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+
+    private Vector3 lastCollisionPoint;
+    private Vector3 forward;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
     }
 
@@ -67,20 +72,33 @@ public class PlayerController : MonoBehaviour
         {
             velocity = Vector3.zero;
         }
-        transform.position += velocity * speed * Time.deltaTime;
+        rb.MovePosition(transform.position + velocity * speed * Time.deltaTime);
+        if (velocity.magnitude > 0) forward = velocity.normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        var tile = LevelManager.Instance.GetTileAtPosition(collision.contacts[0].point);
-        if (tile == null) return;
-        if (typeof(ICollisionTile).IsAssignableFrom(tile.GetType()))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * .1f;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * .1f, out ICollisionTile tile))
         {
-            ICollisionTile _t = (ICollisionTile)tile;
-            if (_t == null) return;
-            _t.OnCollision();
+            tile.OnCollision();
         }
+    }
+
+    private Vector2 ContactPointAverage(ContactPoint2D[] points)
+    {
+        Vector2 point = Vector2.zero;
+        for (int i = 0; i < points.Length; i++)
+        {
+            point += points[i].point;
+        }
+        return point /= points.Length;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
     }
 }
 
