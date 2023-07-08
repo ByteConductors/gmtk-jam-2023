@@ -42,6 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Road
+    uniqueID: 3774655311
+    locked: 0
+  - name: Player & Buildings
+    uniqueID: 1741562185
+    locked: 0
   - name: Cursor
     uniqueID: 4150504363
     locked: 0

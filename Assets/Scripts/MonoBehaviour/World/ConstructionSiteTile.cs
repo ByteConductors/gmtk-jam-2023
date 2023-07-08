@@ -19,11 +19,20 @@ public class ConstructionSiteTile : Tile, ICollisionTile
 
     public void OnPlace()
     {
-        GameManager.Instance.AddConstructionTimer(buildingTile.resource, buildingTile.deliveryTime, this);
+        GameManager.Instance.AddConstructionTimer(position, buildingTile.deliveryTime);
     }
 
     public void OnCollision()
     {
+        BuildingResource resource = buildingTile.resource;
+        // Get the Players currently held Resource
+        // var resource = PlayerController.Instance.GetCurrentResource();
+        // Check if resource is the same a required
+        if (resource != buildingTile.resource) return;
+        // if so, Tell the LevelManager to update the Tile
+        LevelManager.Instance.UpdateTile(buildingTile, position);
+        // And the GameManager to remove the Loss Timer;
+        GameManager.Instance.RemoveTimer(position);
         Debug.Log("Collided With Construction Tile!");
     }
 }

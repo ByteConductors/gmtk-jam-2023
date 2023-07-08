@@ -38,14 +38,14 @@ public class PlayerController : MonoBehaviour
             velocity = Vector3.up;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
+            spriteRenderer.flipY = true;
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             velocity = Vector3.down;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = true;
+            spriteRenderer.flipY = false;
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
