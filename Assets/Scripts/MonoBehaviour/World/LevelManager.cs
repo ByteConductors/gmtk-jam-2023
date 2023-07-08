@@ -84,6 +84,7 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateTile(TileBase tile, Vector3Int position)
     {
+        if (tile.GetType() == typeof(BuildingTile)) ((BuildingTile)tile).OnPlace();
         buildingMap.SetTile(position, tile);
     }
 
@@ -103,9 +104,12 @@ public class LevelManager : MonoBehaviour
         return false;
     }
 
+    Vector3 lastConversion;
+
     public TileBase GetTileAtPosition(Vector3 position)
     {
         Debug.Log(v3tov3i(position));
+        lastConversion = v3tov3i(position);
         return buildingMap.GetTile(v3tov3i(position));
     }
     Vector3Int v3tov3i(Vector3 position)
@@ -133,4 +137,8 @@ public class LevelManager : MonoBehaviour
     public bool GetAvailable(Vector3Int position) => 
         !buildingPositions.Contains(position) && 
         !roadPositions.Contains(position);
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(lastConversion + Vector3.one * 0.5f, Vector3.one);
+    }
 }

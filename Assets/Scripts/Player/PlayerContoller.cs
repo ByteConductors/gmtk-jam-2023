@@ -95,8 +95,8 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * .1f;
-        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * .1f, out ICollisionTile tile))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * 0.5f;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * 0.5f, out ICollisionTile tile))
         {
             tile.OnCollision();
         }
@@ -114,7 +114,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(lastCollisionPoint, 0.1f);
     }
     
     public BuildingResource getResource()

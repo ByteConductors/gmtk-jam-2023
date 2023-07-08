@@ -337,6 +337,11 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!4 &234831249 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4267736333981745955, guid: bb13ab31d543e9a4b99cf3a8bbd364e1, type: 3}
+  m_PrefabInstance: {fileID: 896352524733162127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &314031819
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +398,7 @@ GameObject:
   - component: {fileID: 331864705}
   - component: {fileID: 331864704}
   - component: {fileID: 331864703}
+  - component: {fileID: 331864706}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -474,6 +480,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &331864706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331864702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97d71a8a9d55dce4eae0f7fd3cd0cf8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 234831249}
+  offset: {x: 0, y: 0, z: -10}
+  currentPoint: {x: 0, y: 0, z: -10}
+  maxDistance: 5
+  followSpeed: 4
 --- !u!1 &476181382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,11 +1296,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4267736333981745955, guid: bb13ab31d543e9a4b99cf3a8bbd364e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.91
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4267736333981745955, guid: bb13ab31d543e9a4b99cf3a8bbd364e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4267736333981745955, guid: bb13ab31d543e9a4b99cf3a8bbd364e1, type: 3}
       propertyPath: m_LocalPosition.z
