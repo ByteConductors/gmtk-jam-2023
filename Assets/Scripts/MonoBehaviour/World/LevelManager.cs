@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Tilemaps;
 
 public class LevelManager : MonoBehaviour
@@ -43,7 +44,8 @@ public class LevelManager : MonoBehaviour
         var tile = ScriptableObject.CreateInstance<StorageTile>().CloneContents(storageTiles[0]);
         tile.Position = new Vector3Int(0, 1);
         buildingMap.SetTile(new Vector3Int(0, 1), tile);
-        buildingPositions.Add(new Vector3Int(0,1));
+        buildingPositions.Add(new Vector3Int(0, 1));
+        buildingPositions.Add(new Vector3Int(0, 2));
         tile.OnPlace();
     }
 
