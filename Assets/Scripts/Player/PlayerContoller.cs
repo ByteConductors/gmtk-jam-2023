@@ -12,7 +12,10 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movement;
 
-    [SerializeField] private AudioSource audioSource;
+    private SoundEmitter soundEmitter_Move;
+    [SerializeField]private AudioClip audioClip_Move;
+    private SoundEmitter soundEmitter_Idle;
+    [SerializeField]private AudioClip audioClip_Idle;
 
     [SerializeField] private Vector3 velocity;
 
@@ -37,7 +40,13 @@ public class PlayerController : MonoBehaviour
         velocity = Vector3.zero;
         ressource = null;
         maxCarry = 4;
-        audioSource = GetComponent<AudioSource>();
+
+        Debug.Log("PlayerController Start");
+
+        soundEmitter_Idle = SoundManager.instance.PlaySound(audioClip_Idle, instance.gameObject, true, 0.1f);
+        Debug.Log("soundEmitter_Idle: " + soundEmitter_Idle);
+        soundEmitter_Move = SoundManager.instance.PlaySound(audioClip_Move, instance.gameObject, true, 0.2f);
+        Debug.Log("soundEmitter_Move: " + soundEmitter_Move);
     }
 
     private void OnMovement(InputValue value)
@@ -54,9 +63,11 @@ public class PlayerController : MonoBehaviour
     void Update(){
         if (movement.magnitude > 0)
         {
-            if (!audioSource.isPlaying) audioSource.Play();
+            soundEmitter_Idle.audioSource.Stop();
+            if (!soundEmitter_Move.audioSource.isPlaying) soundEmitter_Move.audioSource.Play();
         }else{
-            audioSource.Stop();
+            soundEmitter_Move.audioSource.Stop();
+            if (!soundEmitter_Idle.audioSource.isPlaying) soundEmitter_Idle.audioSource.Play();
         }
 
         if (movement.x > 0)
