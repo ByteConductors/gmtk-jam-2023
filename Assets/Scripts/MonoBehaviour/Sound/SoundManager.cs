@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -9,7 +10,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private GameObject SoundEmitterPrefab;
 
-    public float masterVolume = 1.0f;
+    [SerializeField] private AudioMixer audioMixer;
+
+    [SerializeField] public enum SoundType
+    {
+        MASTER,
+        MUSIC,
+        SFX,
+        UI,
+        ENVIRONMENT
+    }
 
     public void Awake()
     {
@@ -54,9 +64,31 @@ public class SoundManager : MonoBehaviour
 
         audioSource.clip = clip;
         audioSource.loop = loop;
-        audioSource.volume = volume*masterVolume;
+        audioSource.volume = volume;
         audioSource.Play();
 
         return soundEmitterComponent;
+    }
+
+    public void SetVolume(SoundType soundType, float volume)
+    {
+        switch (soundType)
+        {
+            case SoundType.MASTER:
+                audioMixer.SetFloat("MasterVol", volume);
+                break;
+            case SoundType.MUSIC:
+                audioMixer.SetFloat("MusicVol", volume);
+                break;
+            case SoundType.SFX:
+                audioMixer.SetFloat("SFXVol", volume);
+                break;
+            case SoundType.UI:
+                audioMixer.SetFloat("UIVol", volume);
+                break;
+            case SoundType.ENVIRONMENT:
+                audioMixer.SetFloat("EnvironmentVol", volume);
+                break;
+        }
     }
 }
