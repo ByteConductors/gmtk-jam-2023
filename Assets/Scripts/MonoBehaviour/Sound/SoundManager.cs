@@ -41,7 +41,7 @@ public class SoundManager : MonoBehaviour
         * @param volume: the volume of the sound
 
     */
-    public SoundEmitter PlaySound(AudioClip clip, GameObject gameObject, bool loop, float volume)
+    public SoundEmitter PlaySound(AudioClip clip, GameObject gameObject, bool loop, float volume, SoundType soundType = SoundType.SFX)
     {
         if (clip == null)
         {
@@ -65,6 +65,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.loop = loop;
         audioSource.volume = volume;
+        audioSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(soundType.ToString())[0];
         audioSource.Play();
 
         return soundEmitterComponent;
