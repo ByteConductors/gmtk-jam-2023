@@ -564,12 +564,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc51fd4c709a2448a0a5743ce29ea75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roadPositions: []
+  buildingPositions: []
   buildingMap: {fileID: 107590816}
   buildingTiles:
-  - {fileID: 11400000, guid: e26181502f663c94787088fea5ab7a4c, type: 2}
-  - {fileID: 11400000, guid: e26181502f663c94787088fea5ab7a4c, type: 2}
-  - {fileID: 11400000, guid: e26181502f663c94787088fea5ab7a4c, type: 2}
-  - {fileID: 11400000, guid: e26181502f663c94787088fea5ab7a4c, type: 2}
+  - {fileID: 11400000, guid: 522b77e3b9ee6bf4299b0451dcda12be, type: 2}
+  - {fileID: 11400000, guid: a92b49fb8d962f04591b0005977241a1, type: 2}
+  - {fileID: 11400000, guid: 87846d3f7d2f92a4682bf7440e74b620, type: 2}
+  - {fileID: 11400000, guid: 7dd91f14f5ce61f43909380f3c304fbe, type: 2}
   constructionSiteTile: {fileID: 11400000, guid: 619dee1fb6cc3094e9c6026e95818bba, type: 2}
   roadTile: {fileID: 11400000, guid: f6ec15fab75900f418161b0e707e4648, type: 2}
   roadMap: {fileID: 1502436077}
@@ -933,6 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb17824f617d40146932fc36b652836d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionTime: 0
   phaseTime: 0
 --- !u!1 &1502436074
 GameObject:

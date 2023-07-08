@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
 {
     const float ROADTHRESHOLD = .9f;
     const int MAX_TRIES = 5;
-    const float ROAD_ACTION_TIME = 5;
-    const float BUILDING_ACTION_TIME = .5f;
+    const float ROAD_ACTION_TIME = 10;
+    const float BUILDING_ACTION_TIME = 2f;
     bool first = true;
 
     static GameManager instance;
@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
                 break;
             };
         }
-        int roadCount = Random.Range(2, 7);
+        int roadCount = Random.Range(4, 7);
         for (int i = 0; i < roadCount; i++)
         {
             if (!LevelManager.Instance.GetAvailable(position + direction * i)) break;

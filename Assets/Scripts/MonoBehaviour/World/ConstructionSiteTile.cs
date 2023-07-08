@@ -24,9 +24,8 @@ public class ConstructionSiteTile : Tile, ICollisionTile
 
     public void OnCollision()
     {
-        BuildingResource resource = buildingTile.resource;
         // Get the Players currently held Resource
-        // var resource = PlayerController.Instance.GetCurrentResource();
+        var resource = PlayerController.instance.getResource();
         // Check if resource is the same a required
         if (resource != buildingTile.resource) return;
         // if so, Tell the LevelManager to update the Tile

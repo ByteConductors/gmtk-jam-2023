@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,7 +15,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 lastCollisionPoint;
     private Vector3 forward;
 
-    private ScriptableObject ressource;
+    private BuildingResource ressource;
+    int count;
+    int maxCarry;
 
 
 
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
         ressource = null;
+        maxCarry = 1;
     }
 
     // Update is called once per frame
@@ -114,14 +115,27 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
     }
     
-    public ScriptableObject getResource()
+    public BuildingResource getResource()
     {
         return ressource;
     }
 
-    public void setResource(ScriptableObject resource)
+    public void setResource(BuildingResource resource)
     {
         this.ressource = resource;
+        count = maxCarry;
+    }
+    public void UseResource()
+    {
+        if (ressource == null) return;
+        if (count == 0) return;
+        if (count == 1)
+        {
+            count = 0;
+            ressource = null;
+        }else {
+            count--;
+        }
     }
 
     public void Awake()
