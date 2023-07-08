@@ -9,7 +9,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - ContextBoubbles
   - Water
   - UI
   - 
@@ -50,4 +50,7 @@ TagManager:
     locked: 0
   - name: Cursor
     uniqueID: 4150504363
+    locked: 0
+  - name: Context Bubble
+    uniqueID: 2126235747
     locked: 0

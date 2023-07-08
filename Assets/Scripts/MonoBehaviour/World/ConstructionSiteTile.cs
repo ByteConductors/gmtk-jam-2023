@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(menuName = "Construction Tile")]
-public class ConstructionSiteTile : Tile, ICollisionTile
+public class ConstructionSiteTile : BuildingTile, ICollisionTile
 {
     public BuildingTile buildingTile;
     public Vector3Int position;
@@ -17,7 +18,7 @@ public class ConstructionSiteTile : Tile, ICollisionTile
         this.color = Color.gray;
     }
 
-    public void OnPlace()
+    public override void OnPlace()
     {
         GameManager.Instance.AddConstructionTimer(position, buildingTile.deliveryTime);
     }
@@ -36,6 +37,7 @@ public class ConstructionSiteTile : Tile, ICollisionTile
         Debug.Log("Removing Timer!");
         GameManager.Instance.RemoveTimer(position);
         PlayerController.instance.UseResource();
+        buildingTile.OnPlace();
         Debug.Log("Collided With Construction Tile!");
     }
 }

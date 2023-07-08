@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public Sprite spriteUp;
     public Sprite spriteRight;
 
+    private Vector2 movement;
+
     [SerializeField] private Vector3 velocity;
 
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -14,7 +18,8 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Vector3 lastCollisionPoint;
     [SerializeField] private Vector3 forward;
-    
+
+    public event Action<(BuildingResource,int)> PlayerResourceUpdated;
     [SerializeField] private BuildingResource ressource;
     [SerializeField] int count;
     public int maxCarry;
@@ -28,73 +33,55 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
         ressource = null;
-        maxCarry = 1;
+        maxCarry = 4;
+    }
+
+    private void OnMovement(InputValue value)
+    {
+        movement = value.Get<Vector2>();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.W))
+        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+    }
+
+    void Update(){
+        if (movement.x > 0)
         {
-            velocity = Vector3.up;
+            
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+        }
+        else if (movement.x < 0)
+        {
+            spriteRenderer.sprite = spriteRight;
+            spriteRenderer.flipX = true;
+            spriteRenderer.flipY = false;
+            
+        }
+        else if (movement.y > 0)
+        {
+            spriteRenderer.sprite = spriteUp;
+            spriteRenderer.flipX = false;
+            spriteRenderer.flipY = false;
+            
+        }
+        else if (movement.y < 0)
+        {
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
         }
-        if (Input.GetKey(KeyCode.S))
-        {
-            velocity = Vector3.down;
-            spriteRenderer.sprite = spriteUp;
-            spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            velocity = Vector3.left;
-            spriteRenderer.sprite = spriteRight;
-            spriteRenderer.flipX = true;
-            spriteRenderer.flipY = false;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            velocity = Vector3.right;
-            spriteRenderer.sprite = spriteRight;
-            spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
-        }
-        if (!Input.GetKey(KeyCode.W) && velocity == Vector3.up)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.S) && velocity == Vector3.down)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.A) && velocity == Vector3.left)
-        {
-            velocity = Vector3.zero;
-        }
-        if (!Input.GetKey(KeyCode.D) && velocity == Vector3.right)
-        {
-            velocity = Vector3.zero;
-        }
-        if((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) && (velocity == Vector3.down || velocity == Vector3.up))
-        {
-            velocity = Vector3.zero;
-        }
-        if ((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) && (velocity == Vector3.left || velocity == Vector3.right))
-        {
-            velocity = Vector3.zero;
-        }
-        rb.MovePosition(transform.position + velocity * speed * Time.deltaTime);
-        if (velocity.magnitude > 0) forward = velocity.normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * .1f;
-        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * .1f, out ICollisionTile tile))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * 0.5f;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * 0.5f, out ICollisionTile tile))
         {
             tile.OnCollision();
         }
@@ -112,7 +99,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(lastCollisionPoint, 0.1f);
     }
     
     public BuildingResource getResource()
@@ -124,6 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         this.ressource = resource;
         count = maxCarry;
+        PlayerResourceUpdated?.Invoke((resource, count));
     }
     public void UseResource()
     {
@@ -136,6 +125,7 @@ public class PlayerController : MonoBehaviour
         }else {
             count--;
         }
+        PlayerResourceUpdated?.Invoke((ressource, count));
     }
 
     public void Awake()

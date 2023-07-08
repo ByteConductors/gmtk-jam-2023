@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -25,6 +26,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     TileBase roadTile;
 
+    [SerializeField]
+    StorageTile[] storageTiles;
+    public StorageTile[] StorageTiles { get => storageTiles; }
+
     public Tilemap BuildingMap { get => buildingMap; private set=> buildingMap = value; }
     [SerializeField]
     Tilemap roadMap;
@@ -33,7 +38,13 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        BuildRoad(new Vector3Int(0, 0));
+        roadMap.SetTile(new Vector3Int(0, 0), roadTile);
+        roadPositions.Add(new Vector3Int());
+        var tile = ScriptableObject.CreateInstance<StorageTile>().CloneContents(storageTiles[0]);
+        tile.Position = new Vector3Int(0, 1);
+        buildingMap.SetTile(new Vector3Int(0, 1), tile);
+        buildingPositions.Add(new Vector3Int(0,1));
+        tile.OnPlace();
     }
 
 
@@ -73,6 +84,7 @@ public class LevelManager : MonoBehaviour
 
     public void UpdateTile(TileBase tile, Vector3Int position)
     {
+        if (tile.GetType() == typeof(BuildingTile)) ((BuildingTile)tile).OnPlace();
         buildingMap.SetTile(position, tile);
     }
 
@@ -92,9 +104,12 @@ public class LevelManager : MonoBehaviour
         return false;
     }
 
+    Vector3 lastConversion;
+
     public TileBase GetTileAtPosition(Vector3 position)
     {
         Debug.Log(v3tov3i(position));
+        lastConversion = v3tov3i(position);
         return buildingMap.GetTile(v3tov3i(position));
     }
     Vector3Int v3tov3i(Vector3 position)
@@ -122,4 +137,8 @@ public class LevelManager : MonoBehaviour
     public bool GetAvailable(Vector3Int position) => 
         !buildingPositions.Contains(position) && 
         !roadPositions.Contains(position);
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(lastConversion + Vector3.one * 0.5f, Vector3.one);
+    }
 }
