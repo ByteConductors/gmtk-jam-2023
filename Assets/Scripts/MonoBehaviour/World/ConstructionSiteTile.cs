@@ -24,6 +24,6 @@ public class ConstructionSiteTile : Tile, ICollisionTile
 
     public void OnCollision()
     {
-        Debug.Log("Collision!");
+        Debug.Log("Collided With Construction Tile!");
     }
 }

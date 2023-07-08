@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,85 +10,95 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
 
     private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb;
+
+    private Vector3 lastCollisionPoint;
+    private Vector3 forward;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((velocity.y == -1 && Input.GetKey(KeyCode.W)) || (velocity.y == 1 && Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
-        {
-            velocity.y = 0;
-        }
-        else if ((velocity.x == 1 && Input.GetKey(KeyCode.A)) || (velocity.x == -1 && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.A)))
-        {
-            velocity.x = 0;
-        }
-        else if(Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             velocity = Vector3.up;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
         }
-         else if(Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             velocity = Vector3.down;
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = true;
         }
-        else if(Input.GetKey(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             velocity = Vector3.left;
             spriteRenderer.sprite = spriteRight;
             spriteRenderer.flipX = true;
             spriteRenderer.flipY = false;
         }
-        else if(Input.GetKey(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             velocity = Vector3.right;
             spriteRenderer.sprite = spriteRight;
             spriteRenderer.flipX = false;
             spriteRenderer.flipY = false;
         }
-        else if (Input.GetKey(KeyCode.W) == false && velocity == Vector3.up)
+        if (Input.GetKeyUp(KeyCode.W) && velocity == Vector3.up)
         {
             velocity = Vector3.zero;
         }
-        else if(Input.GetKey(KeyCode.S) == false && velocity == Vector3.down)
+        if (Input.GetKeyUp(KeyCode.S) && velocity == Vector3.down)
         {
             velocity = Vector3.zero;
         }
-        else if(Input.GetKey(KeyCode.A) == false && velocity == Vector3.left)
+        if (Input.GetKeyUp(KeyCode.A) && velocity == Vector3.left)
         {
             velocity = Vector3.zero;
         }
-        else if(Input.GetKey(KeyCode.D) == false && velocity == Vector3.right)
+        if (Input.GetKeyUp(KeyCode.D) && velocity == Vector3.right)
         {
             velocity = Vector3.zero;
-        } 
-        
-        transform.position += velocity * speed * Time.deltaTime;
+        }
+        rb.MovePosition(transform.position + velocity * speed * Time.deltaTime);
+        if (velocity.magnitude > 0) forward = velocity.normalized;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        var tile = LevelManager.Instance.GetTileAtPosition(collision.contacts[0].point);
-        if (tile == null) return;
-        if (typeof(ICollisionTile).IsAssignableFrom(tile.GetType()))
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * .1f;
+        if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * .1f, out ICollisionTile tile))
         {
-            ICollisionTile _t = (ICollisionTile)tile;
-            if (_t == null) return;
-            _t.OnCollision();
+            tile.OnCollision();
         }
+    }
+
+    private Vector2 ContactPointAverage(ContactPoint2D[] points)
+    {
+        Vector2 point = Vector2.zero;
+        for (int i = 0; i < points.Length; i++)
+        {
+            point += points[i].point;
+        }
+        return point /= points.Length;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
     }
 }
 

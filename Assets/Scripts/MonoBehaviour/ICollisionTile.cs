@@ -1,4 +1,4 @@
-﻿internal interface ICollisionTile
+﻿public interface ICollisionTile
 {
     void OnCollision();
 }
