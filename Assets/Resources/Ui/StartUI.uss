@@ -1,3 +1,21 @@
 .button {
-    width: 75%;
+    width: 100%;
+    font-size: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    -unity-font-style: bold;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    -unity-text-align: upper-center;
+    text-overflow: clip;
+    white-space: normal;
+    height: auto;
 }

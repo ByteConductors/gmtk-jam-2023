@@ -9,7 +9,7 @@
                 <ui:Label tabindex="-1" text="0" display-tooltip-when-elided="true" name="ScoreCount" class="scores scount" style="position: absolute; top: 50px; right: 0;" />
             </ui:GroupBox>
             <ui:GroupBox style="justify-content: space-between; align-self: center; width: 100%; height: 75%; align-items: stretch;">
-                <ui:VisualElement style="background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Sprites/Ressources/Sprite_Ressource_Stone&apos;); -unity-background-scale-mode: stretch-to-fill; width: 80%; height: 22.222%; align-self: center;" />
+                <ui:VisualElement name="OnTruck" style="background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Sprites/Ressources/Sprite_Ressource_Stone&apos;); -unity-background-scale-mode: stretch-to-fill; width: 80%; height: 22.222%; align-self: center;" />
             </ui:GroupBox>
         </ui:GroupBox>
         <ui:GroupBox name="RightSide" class="side nopadding" style="position: absolute; left: auto; top: 0; right: 0;">
