@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     public float speed;
     public Sprite spriteUp;
     public Sprite spriteRight;
@@ -15,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 lastCollisionPoint;
     private Vector3 forward;
 
+    private ScriptableObject ressource;
+
 
 
     // Start is called before the first frame update
@@ -23,6 +27,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
+        ressource = null;
     }
 
     // Update is called once per frame
@@ -99,6 +104,25 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(lastCollisionPoint, Vector3.one * 0.1f);
+    }
+    public ScriptableObject getResource()
+    {
+        return ressource;
+    }
+    public void setResource(ScriptableObject resource)
+    {
+        this.ressource = resource;
+    }
+    public void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
     }
 }
 
