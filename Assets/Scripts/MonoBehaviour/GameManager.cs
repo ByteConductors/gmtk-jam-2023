@@ -14,10 +14,18 @@ public class GameManager : MonoBehaviour
     const int MAX_TRIES = 5;
     const float ROAD_ACTION_TIME = 10;
     const float BUILDING_ACTION_TIME = 2f;
+    const int STOREHOUSE_BUILD_ITTERATIONS = 6;
+    int itterations;
+    const int STOREHOUSE_MATERIAL_ITTERATIONS = 4;
+    int matIttertations;
+    int materials;
     bool first = true;
 
     static GameManager instance;
     public static GameManager Instance { get => instance; }
+
+    [SerializeField]
+    StorageTile[] stores;
 
     public float actionTime;
 
@@ -47,6 +55,17 @@ public class GameManager : MonoBehaviour
     private void CheckActionTime()
     {
         if (actionTime > Time.time) return;
+        itterations++;
+        if (itterations == STOREHOUSE_BUILD_ITTERATIONS)
+        {
+            itterations = 0;
+            BuildBuildings(stores[Random.Range(0,Mathf.Min(materials,stores.Length))]);
+            matIttertations++;
+        }
+        if (matIttertations == STOREHOUSE_MATERIAL_ITTERATIONS) {
+            matIttertations = 0;
+            materials++; 
+        }
         if (first)
         {
             BuildRoads();
@@ -64,11 +83,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void BuildBuildings()
+    public void BuildBuildings(BuildingTile building = null)
     {
         actionTime = Time.time + BUILDING_ACTION_TIME;
         var pos = LevelManager.Instance.GetAvailableNeighbour(LevelManager.Instance.GetRandomRoad());
-        LevelManager.Instance.BuildrandomBuilding(pos);
+        if (!building) LevelManager.Instance.BuildrandomBuilding(pos);
+        else LevelManager.Instance.BuildBuilding(building, pos);
     }
 
     public void BuildRoads()

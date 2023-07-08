@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
         ressource = null;
-        maxCarry = 1;
+        maxCarry = 4;
     }
 
     // Update is called once per frame

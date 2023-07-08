@@ -7,9 +7,10 @@ using UnityEngine.Tilemaps;
 public class StorageTile : BuildingTile,ICollisionTile 
 {
     [SerializeField]
-    private BuildingResource storedResource;
+    public BuildingResource storedResource;
 
-    public void onPlace()
+
+    public override void OnPlace()
     {
         if (Position == null || Position == new Vector3Int(0,0,0)) return;
         Debug.Log("Storage Position: " + Position);
@@ -19,8 +20,6 @@ public class StorageTile : BuildingTile,ICollisionTile
     public void OnCollision() //change ressource that the player is carrying
     {
         if (PlayerController.instance == null) return;
-
-        onPlace();
 
         // if player is already carrying a resource, do nothing
         //if (PlayerController.instance.getResource() != null) return;

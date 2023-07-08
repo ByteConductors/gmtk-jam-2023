@@ -16,7 +16,7 @@ public class BuildingTile : Tile
     public Vector3Int Position { get => position; set => position = value; }
 
 
-
+    public virtual void OnPlace() { }
     private void Awake()
     {
     }
