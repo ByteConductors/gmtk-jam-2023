@@ -58,7 +58,11 @@ public class LevelManager : MonoBehaviour
 
     public void BuildBuilding(BuildingTile building, Vector3Int position)
     {
-        buildingPositions.Add(position);
+        for (int i = 0; i < building.size.x; i++)
+        {
+            buildingPositions.Add(position + Vector3Int.right * i);
+        }
+        
         building.Position = position;
         var constrution = ScriptableObject.CreateInstance<ConstructionSiteTile>();
         constrution.SetBuilding(building, position);
