@@ -1,8 +1,6 @@
 # gmtk-jam-2023
 The Repository for the "GMTK Game Jam 2023" Game. May we finish this bastard.
 
-<iframe frameborder="0" src="https://itch.io/embed/2147034?bg_color=404147&amp;fg_color=f0f0f0&amp;link_color=000000&amp;border_color=404147" width="552" height="167"><a href="https://casqan.itch.io/carrier-express">Carrier Express by casqan, Ninja200411, mabe4004</a></iframe>
-
 ## Naming Schemes
 Assets: type_group_name_variant  
 Examples: 
