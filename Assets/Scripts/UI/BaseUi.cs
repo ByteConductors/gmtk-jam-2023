@@ -91,7 +91,7 @@ public class BaseUI : MonoBehaviour
         (int, int) curr = gameManager.GetUpgardeTime();
         if (res.Item1 != res.Item2)
         {
-            buildSpeedUp.text = "Time " + curr.Item1 + " (" + curr.Item2 + "SP)";
+            buildSpeedUp.text = "Build Time " + curr.Item1 + " (" + curr.Item2 + "SP)";
         }
         else
         {
