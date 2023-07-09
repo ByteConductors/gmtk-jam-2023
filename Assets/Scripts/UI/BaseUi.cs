@@ -63,9 +63,6 @@ public class BaseUI : MonoBehaviour
         {
             highScoreCount.text = PlayerPrefs.GetInt("HighScore").ToString();
         }
-
-
-
     }
     public void OnSkillPointUpdate(int count)
     {

@@ -78,9 +78,8 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckTimer();
-        CheckActionTime();
-
+        if (!isGameOver) CheckTimer();
+        if (!isGameOver) CheckActionTime();
         if (!isGameOver && lives <= 0)
         {
             isGameOver = true;

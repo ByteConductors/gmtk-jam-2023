@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Level")) return;
-        lastCollisionPoint = ContactPointAverage(collision.contacts) + (Vector2)forward * extension;
+        lastCollisionPoint = ContactPointAverage(collision.contacts) + collision.contacts[0].normal * extension;
         if (LevelManager.Instance.TryGetCollisionTile(transform.position + forward * extension, out ICollisionTile tile))
         {
             tile.OnCollision();
