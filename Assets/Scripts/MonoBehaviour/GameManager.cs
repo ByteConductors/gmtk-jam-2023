@@ -209,6 +209,7 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curSpeedUpgrades++;
             SpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+            PlayerController.instance.speedModifier += 0.1f;
         }
         return (curSpeedUpgrades, maxSpeedUpgrades);
     }
@@ -221,6 +222,8 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curBuildSpeedUpgrades++;
             BuildSpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+            GameManager.Instance.ROAD_ACTION_TIME += 1f;
+            GameManager.Instance.BUILDING_ACTION_TIME += 1f;
         }
         return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
     }
