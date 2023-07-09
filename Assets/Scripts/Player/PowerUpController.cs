@@ -1,35 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 public class PowerUpController : MonoBehaviour
 {
-    public Button speedButton;
-    public Button carryCapacityButton;
-    public Button buildSpeedButton;
+
+    public PowerUpController instance;
+
+    public int upgradePoints = 0;
 
     void Start()
     {
-        speedButton.clicked += SpeedUp;
-        carryCapacityButton.clicked += CarryCapacityUp;
-        buildSpeedButton.clicked += BuildSpeedUp;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        upgradePoints = 0;
+
+        BaseUI.instance.SpeedUpgrade += SpeedUp;
+        BaseUI.instance.CarryCapacityUpgrade += CarryCapacityUp;
+        BaseUI.instance.BuildSpeedUpgrade += BuildSpeedUp;
     }
 
-    void SpeedUp()
+    void SpeedUp(int price)
     {
-        // <env>.instance.speed += 1;
+        if (upgradePoints >= price){
+            upgradePoints -= price;
+            PlayerController.instance.speed += 1;
+        }
     }
 
-    void CarryCapacityUp()
+    void CarryCapacityUp(int price)
     {
-        // <env>.instance.maxCarry += 1;
+        if (upgradePoints >= price){
+            upgradePoints -= price;
+            PlayerController.instance.maxCarry += 1;
+        }
     }
 
-    void BuildSpeedUp()
+    void BuildSpeedUp(int price)
     {
-        // <env>.instance.buildSpeed += 1;
+        if (upgradePoints >= price){
+            upgradePoints -= price;
+            GameManager.Instance.ROAD_ACTION_TIME += 1f;
+            GameManager.Instance.BUILDING_ACTION_TIME += 1f;
+        }
     }
 
 
