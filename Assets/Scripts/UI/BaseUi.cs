@@ -40,11 +40,11 @@ public class BaseUI : MonoBehaviour
         speedUp = uIDocument.rootVisualElement.Q<Button>("SpeedUp");
 
         (int, int) res = gameManager.GetUpgardeSpeed();
-        speedUp.text = "Speed " + res.Item1 + "SP";
+        speedUp.text = "Speed " + res.Item1 + " (" + res.Item2 + "SP)";
         res = gameManager.GetUpgardeTime();
-        buildSpeedUp.text = "Time " + res.Item1 + "SP";
+        buildSpeedUp.text = "Time " + res.Item1 + " (" + res.Item2 + "SP)";
         res = gameManager.GetUpgradeCapasyity();
-        carryCapacity.text = "Capacity " + res.Item1 + "SP";
+        carryCapacity.text = "Capacity " + res.Item1 + " (" + res.Item2 + "SP)";
         elementCount.text = curRessources + "/" + res.Item1;
 
         carryCapacity.RegisterCallback<ClickEvent>(CarryCapacityOnClick);
@@ -71,9 +71,10 @@ public class BaseUI : MonoBehaviour
     public void CarryCapacityOnClick(ClickEvent env)
     {
         (int, int) res = gameManager.UpgardeCapayity();
-        if(res.Item1 != res.Item2)
+        (int, int) curr = gameManager.GetUpgradeCapasyity();
+        if (res.Item1 != res.Item2)
         {
-            carryCapacity.text = "Capacity " + res.Item1 + "SP";
+            carryCapacity.text = "Capacity " + curr.Item1 + " (" + curr.Item2 + "SP)";
         }
         else
         {
@@ -84,9 +85,10 @@ public class BaseUI : MonoBehaviour
     public void BuildSpeedUpOnClick(ClickEvent env)
     {
         (int, int) res = gameManager.UpgardeTime();
+        (int, int) curr = gameManager.GetUpgardeTime();
         if (res.Item1 != res.Item2)
         {
-            buildSpeedUp.text = "Time " + res.Item1 + "SP";
+            buildSpeedUp.text = "Time " + curr.Item1 + " (" + curr.Item2 + "SP)";
         }
         else
         {
@@ -97,9 +99,10 @@ public class BaseUI : MonoBehaviour
     public void SpeedUpOnClick(ClickEvent env)
     {
         (int, int) res = gameManager.UpgardeSpeed();
+        (int, int) curr = gameManager.GetUpgardeSpeed();
         if (res.Item1 != res.Item2)
         {
-            speedUp.text = "Speed " + res.Item1 + "SP";
+            speedUp.text = "Speed " + curr.Item1 + " (" + curr.Item2 + "SP)";
         }
         else
         {
@@ -126,8 +129,12 @@ public class BaseUI : MonoBehaviour
     public void OnScoreUpdate(int count)
     {
         scoreCount.text = count.ToString();
-        PlayerPrefs.SetInt("HighScore", count);
-        PlayerPrefs.Save();
+        if(Int32.Parse(highScoreCount.text) < count) {
+            highScoreCount.text = count.ToString();
+            PlayerPrefs.SetInt("HighScore", count);
+            PlayerPrefs.Save();
+        }
+       
     }
     public void Awake()
     {

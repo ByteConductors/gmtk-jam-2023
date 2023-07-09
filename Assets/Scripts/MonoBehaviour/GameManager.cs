@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     const float ROADTHRESHOLD = .9f;
-    const int MAX_TRIES = 3;
+    const int MAX_TRIES = 5;
     public float ROAD_ACTION_TIME = 10;
     public float BUILDING_ACTION_TIME = 2f;
     const int STOREHOUSE_BUILD_ITTERATIONS = 6;
@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour
     private int curCarryCapacityUpgrades = 1;
     private int curBuildSpeedUpgrades = 1;
     private int curSpeedUpgrades = 1;
-    private int curRessources = 0;
 
     private void Awake()
     {
@@ -209,7 +208,6 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curSpeedUpgrades++;
             SpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
-            PlayerController.instance.speedModifier += 0.1f;
         }
         return (curSpeedUpgrades, maxSpeedUpgrades);
     }
@@ -222,21 +220,19 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curBuildSpeedUpgrades++;
             BuildSpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
-            GameManager.Instance.ROAD_ACTION_TIME += 1f;
-            GameManager.Instance.BUILDING_ACTION_TIME += 1f;
         }
         return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
     }
     public (int, int) GetUpgardeTime()
     {
-        return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
+        return (curBuildSpeedUpgrades, BuildSpeedUpgradeBasicKost + (buildSpeedUpgradesKostIncreasement * (curBuildSpeedUpgrades - 1)));
     }
     public (int, int) GetUpgardeSpeed()
     {
-        return (curSpeedUpgrades, maxSpeedUpgrades);
+        return (curSpeedUpgrades, speedUpgradeBasicKost + (speedUpgradesKostIncreasement * (curSpeedUpgrades - 1)));
     }
     public (int, int) GetUpgradeCapasyity()
     {
-        return (curCarryCapacityUpgrades, maxCarryCapacityUpgrades);
+        return (curCarryCapacityUpgrades, carryCapacityUpgradeBasicKost + (carryCapacityUpgradeKostIncreasement * (curCarryCapacityUpgrades - 1)));
     }
 }
