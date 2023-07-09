@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     const float ROADTHRESHOLD = .9f;
     const int MAX_TRIES = 3;
-    public float ROAD_ACTION_TIME = 10;
+    public float ROAD_ACTION_TIME = 7f;
     public float BUILDING_ACTION_TIME = 2f;
     const int STOREHOUSE_BUILD_ITTERATIONS = 6;
     int itterations;
@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public float actionTime;
     public event System.Action<int> OnLiveUpdate;
+    [SerializeField]
     int lives = 10;
     public int Lives { get { return lives; } }
 
@@ -73,9 +74,6 @@ public class GameManager : MonoBehaviour
         actionTime = Time.time + 5f;
 
         isGameOver = false;
-
-        lives = 0;
-
     }
 
     private void FixedUpdate()
@@ -204,9 +202,16 @@ public class GameManager : MonoBehaviour
         uint score = (uint)(timers[key].Item1.baseScore * (timers[key].Item1.deliveryTime / timeLeft));
         Debug.Log("Adding score: " + score);
         AddScore(score);
+        AddSkillPoints(1);
         SliderScriptManager.instance.SliderRemove(key);
         var success = timers.Remove(key);
         return success;
+    }
+
+    void AddSkillPoints(int points)
+    {
+        skillPoints += points;
+        OnSkillPointUpdate?.Invoke(skillPoints);
     }
 
     public static string v3i2key(Vector3Int position)

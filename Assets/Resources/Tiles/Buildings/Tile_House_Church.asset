@@ -37,6 +37,6 @@ MonoBehaviour:
   BuildingName: 
   BuildingType: 
   resource: {fileID: 0}
-  deliveryTime: 60
+  deliveryTime: 30
   size: {x: 2, y: 1}
   baseScore: 10

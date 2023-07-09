@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -25,16 +26,17 @@ public class GameOverManager : MonoBehaviour
 
     public void ResetGame()
     {
-        ResetGameEvent?.Invoke();
+        SceneManager.LoadSceneAsync(Bootloader.Instance.bootScene, LoadSceneMode.Single);
     }
 
     public void LoadMainMenu()
     {
-        LoadMainMenuEvent?.Invoke();
+        SceneManager.LoadSceneAsync(Bootloader.Instance.mainMenuScene, LoadSceneMode.Single);
     }
 
     public void QuitGame()
     {
-        QuitGameEvent?.Invoke();
+        Application.Quit();
     }
+
 }

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6674422549847416744
 MonoBehaviour:
@@ -44,9 +44,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb17824f617d40146932fc36b652836d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ROAD_ACTION_TIME: 10
+  BUILDING_ACTION_TIME: 2
   stores:
   - {fileID: 11400000, guid: 9ce0bc258dc23624887b9af9b516de53, type: 2}
   - {fileID: 11400000, guid: d8d23e4aa329a7b4e858298c9dd8d6e0, type: 2}
   - {fileID: 11400000, guid: 163af68ec34cf83429f8689dfcd3efed, type: 2}
   actionTime: 0
+  lives: 10
   phaseTime: 0
+  skillPoints: 0
+  maxCarryCapacityUpgrades: 20
+  maxBuildSpeedUpgrades: 20
+  maxSpeedUpgrades: 20
+  carryCapacityUpgradeKostIncreasement: 2
+  buildSpeedUpgradesKostIncreasement: 2
+  speedUpgradesKostIncreasement: 2
+  carryCapacityUpgradeBasicKost: 4
+  BuildSpeedUpgradeBasicKost: 4
+  speedUpgradeBasicKost: 4
+  isGameOver: 0

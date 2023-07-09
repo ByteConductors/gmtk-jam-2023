@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class OptionsUI : MonoBehaviour
@@ -13,6 +14,7 @@ public class OptionsUI : MonoBehaviour
     private Slider sound_fx;
     private Slider environment;
     private Slider ui;
+    private Button exit;
 
     void OnEnable()
     {
@@ -23,11 +25,18 @@ public class OptionsUI : MonoBehaviour
         sound_fx = uIDocument.rootVisualElement.Q<Slider>("SoundFx");
         environment = uIDocument.rootVisualElement.Q<Slider>("Environment");
         ui = uIDocument.rootVisualElement.Q<Slider>("UI");
+        exit = uIDocument.rootVisualElement.Q<Button>("Exit");
 
         master.RegisterValueChangedCallback(x => soundManager.SetVolume(SoundManager.SoundType.MASTER, x.newValue));
         music.RegisterValueChangedCallback(x => soundManager.SetVolume(SoundManager.SoundType.MUSIC, x.newValue));
         sound_fx.RegisterValueChangedCallback(x => soundManager.SetVolume(SoundManager.SoundType.SFX, x.newValue));
         environment.RegisterValueChangedCallback(x => soundManager.SetVolume(SoundManager.SoundType.ENVIRONMENT, x.newValue));
         ui.RegisterValueChangedCallback(x => soundManager.SetVolume(SoundManager.SoundType.UI, x.newValue));
+        exit.RegisterCallback<ClickEvent>(Close);
+    }
+
+    void Close(ClickEvent ev)
+    {
+        SceneManager.UnloadSceneAsync("OptionsUI");
     }
 }

@@ -45,9 +45,9 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("PlayerController Start");
 
-        soundEmitter_Idle = SoundManager.instance.PlaySound(audioClip_Idle, instance.gameObject, true, 0.1f);
+        soundEmitter_Idle = SoundManager.instance.PlaySound(audioClip_Idle, instance.gameObject, true, 0.4f,SoundManager.SoundType.SFX);
         Debug.Log("soundEmitter_Idle: " + soundEmitter_Idle);
-        soundEmitter_Move = SoundManager.instance.PlaySound(audioClip_Move, instance.gameObject, true, 0.2f);
+        soundEmitter_Move = SoundManager.instance.PlaySound(audioClip_Move, instance.gameObject, true, 0.8f, SoundManager.SoundType.SFX);
         Debug.Log("soundEmitter_Move: " + soundEmitter_Move);
     }
 
