@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -146,7 +147,9 @@ public class GameManager : MonoBehaviour
     public void AddConstructionTimer(Vector3Int position,BuildingTile tile, float deliveryTime)
     {
         Debug.Log("Adding timer at:" + v3i2key(position));
-        timers.Add(v3i2key(position), (tile, Time.time + deliveryTime));
+        float starttime = Time.time;
+        timers.Add(v3i2key(position), (tile, starttime + deliveryTime));
+        SliderScriptManager.instance.AddSlider(v3i2key(position), position, starttime);
         Debug.Log("Timer time: " + timers[v3i2key(position)].Item2);
     }
     public (BuildingTile, float) GetTimer(Vector3Int position)
@@ -160,11 +163,16 @@ public class GameManager : MonoBehaviour
         List<string> flagForRemoval = new List<string>();
         foreach (var key in timers.Keys)
         {
+            SliderScriptManager.instance.UpdateSlidert(key, timers[key].Item2);
             if (timers[key].Item2 > Time.time) continue;
             lives -= 1;
             flagForRemoval.Add(key.ToString());
         }
-        foreach (string key in flagForRemoval) timers.Remove(key);
+        foreach (string key in flagForRemoval)
+        {
+            timers.Remove(key);
+            SliderScriptManager.instance.SliderRemove(key);
+        }
     }
 
     public bool RemoveTimer(Vector3Int position)
@@ -179,6 +187,7 @@ public class GameManager : MonoBehaviour
         uint score = (uint)(timers[key].Item1.baseScore * (timers[key].Item1.deliveryTime / timeLeft));
         Debug.Log("Adding score: " + score);
         AddScore(score);
+        SliderScriptManager.instance.SliderRemove(key);
         var success = timers.Remove(key);
         return success;
     }

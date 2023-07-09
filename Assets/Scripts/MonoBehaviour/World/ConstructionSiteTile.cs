@@ -18,9 +18,6 @@ public class ConstructionSiteTile : BuildingTile, ICollisionTile
     public override void OnPlace()
     {
         GameManager.Instance.AddConstructionTimer(Position, buildingTile, buildingTile.deliveryTime);
-        starttime = Time.time;
-        SliderScriptManager.instance.AddSlider(new Vector3(((float)(Position.x) + 0.5f), ((float)(Position.y) + 1f), 0), starttime, buildingTile.deliveryTime);
-
     }
 
     public void OnCollision()
@@ -36,7 +33,6 @@ public class ConstructionSiteTile : BuildingTile, ICollisionTile
         // And the GameManager to remove the Loss Timer;
         Debug.Log("Removing Timer!");
         GameManager.Instance.RemoveTimer(Position);
-        SliderScriptManager.instance.SliderRemove(Position);
         PlayerController.instance.UseResource();
         buildingTile.OnPlace();
         Debug.Log("Collided With Construction Tile!");
