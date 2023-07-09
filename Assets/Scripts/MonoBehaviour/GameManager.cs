@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -147,6 +148,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Adding timer at:" + v3i2key(position));
         timers.Add(v3i2key(position), (tile, Time.time + deliveryTime));
         Debug.Log("Timer time: " + timers[v3i2key(position)].Item2);
+    }
+    public (BuildingTile, float) GetTimer(Vector3Int position)
+    {
+        (BuildingTile, float) time;
+        timers.TryGetValue(v3i2key(position), out time);
+        return time;
     }
     void CheckTimer()
     {
