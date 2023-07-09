@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/_boot.unity
     guid: 2bec3ce91b4b668499708a9437d89925
   - enabled: 1
+    path: Assets/Scenes/UIS/GameOverUI.unity
+    guid: 261ddce9e470288429143c1694cc66af
+  - enabled: 1
     path: Assets/Scenes/MaxPlayground.unity
     guid: ca36974fc2ce5804dbd9883c9ce20a15
   - enabled: 1

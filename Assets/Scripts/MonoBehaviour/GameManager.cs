@@ -61,18 +61,32 @@ public class GameManager : MonoBehaviour
     private int curBuildSpeedUpgrades = 1;
     private int curSpeedUpgrades = 1;
 
+    public bool isGameOver;
+
     private void Awake()
     {
         phaseTimer = Time.deltaTime;
         phaseTime = Time.time;
         instance = this;
         actionTime = Time.time + 5f;
+
+        isGameOver = false;
+
+        lives = 0;
+
     }
 
     private void FixedUpdate()
     {
         CheckTimer();
         CheckActionTime();
+
+        if (!isGameOver && lives <= 0)
+        {
+            isGameOver = true;
+            Debug.Log("Game Over - GameManager Awake");
+            StartCoroutine(Bootloader.Instance.GameOver());
+        }
     }
 
     private void CheckActionTime()
