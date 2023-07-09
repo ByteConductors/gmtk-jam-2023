@@ -10,6 +10,11 @@ public class CameraFollow : MonoBehaviour
     public float maxDistance;
     public float followSpeed;
 
+    private void Awake()
+    {
+        target = PointerController.Instance.transform;
+    }
+
     private void FixedUpdate()
     {
         if (((Vector2)transform.position - (Vector2)target.position).magnitude > maxDistance)

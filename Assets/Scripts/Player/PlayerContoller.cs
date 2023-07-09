@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     private GameManager gameManager;
     public float speed;
+    public float speedModifier = 1f;
     public Sprite spriteUp;
     public Sprite spriteRight;
     public float extension = 0.1f;
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * (speed * speedModifier) * Time.fixedDeltaTime);
     }
 
     void Update(){

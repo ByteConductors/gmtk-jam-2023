@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     const float ROADTHRESHOLD = .9f;
-    const int MAX_TRIES = 5;
+    const int MAX_TRIES = 3;
     public float ROAD_ACTION_TIME = 10;
     public float BUILDING_ACTION_TIME = 2f;
     const int STOREHOUSE_BUILD_ITTERATIONS = 6;
