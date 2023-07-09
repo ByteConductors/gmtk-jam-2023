@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.iOS;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class BaseUI : MonoBehaviour
 {
+    public static BaseUI instance;
     private UIDocument uIDocument;
 
     private Label scoreCount;
@@ -25,9 +21,20 @@ public class BaseUI : MonoBehaviour
     public event Action<int> BuildSpeedUpgrade;
     public event Action<int> SpeedUpgrade;
 
+    // MaxUpgarde
     public int maxCarryCapacityUpgrades;
     public int maxBuildSpeedUpgrades;
     public int maxSpeedUpgrades;
+    
+    //Increasement
+    public int carryCapacityUpgradeKostIncreasement;
+    public int buildSpeedUpgradesKostIncreasement;
+    public int speedUpgradesKostIncreasement;
+
+    //Basic Kost
+    public int carryCapacityUpgradeBasicKost;
+    public int BuildSpeedUpgradeBasicKost;
+    public int speedUpgradeBasicKost;
 
     private int curCarryCapacityUpgrades;
     private int curBuildSpeedUpgrades;
@@ -52,6 +59,10 @@ public class BaseUI : MonoBehaviour
         buildSpeedUp = uIDocument.rootVisualElement.Q<Button>("BuildSpeedButton");
         speedUp = uIDocument.rootVisualElement.Q<Button>("SpeedUp");
 
+        carryCapacity.text = "Capacity " + carryCapacityUpgradeBasicKost;
+        buildSpeedUp.text = "Time " + BuildSpeedUpgradeBasicKost;
+        speedUp.text = "Speed " + speedUpgradeBasicKost;
+
         carryCapacity.RegisterCallback<ClickEvent>(CarryCapacityOnClick);
         buildSpeedUp.RegisterCallback<ClickEvent>(BuildSpeedUpOnClick);
         speedUp.RegisterCallback<ClickEvent>(SpeedUpOnClick);
@@ -70,15 +81,31 @@ public class BaseUI : MonoBehaviour
     }
     public void CarryCapacityOnClick(ClickEvent env)
     {
-        CarryCapacityUpgrade?.Invoke(curCarryCapacityUpgrades);
+        if (curCarryCapacityUpgrades < maxCarryCapacityUpgrades)
+        {
+            carryCapacity.text = "Capacity " + (carryCapacityUpgradeBasicKost + (carryCapacityUpgradeKostIncreasement * curCarryCapacityUpgrades));
+            curCarryCapacityUpgrades++;
+            CarryCapacityUpgrade?.Invoke(curCarryCapacityUpgrades);
+        }
     }
     public void BuildSpeedUpOnClick(ClickEvent env)
     {
-        BuildSpeedUpgrade?.Invoke(curBuildSpeedUpgrades);
+        if(curSpeedUpgrades < maxBuildSpeedUpgrades) 
+        {
+            buildSpeedUp.text = "Time " + (BuildSpeedUpgradeBasicKost + (buildSpeedUpgradesKostIncreasement * curBuildSpeedUpgrades));
+            curBuildSpeedUpgrades++;
+            BuildSpeedUpgrade?.Invoke(curBuildSpeedUpgrades);
+        }
+       
     }
     public void SpeedUpOnClick(ClickEvent env)
     {
-        SpeedUpgrade?.Invoke(curSpeedUpgrades);
+        if(curSpeedUpgrades < maxSpeedUpgrades) 
+        {
+            speedUp.text = "Speed " + (speedUpgradeBasicKost + (speedUpgradesKostIncreasement * curSpeedUpgrades));
+            curSpeedUpgrades++;
+            SpeedUpgrade?.Invoke(curSpeedUpgrades);
+        }
     }
 
     public void OnPlayerResourceUpdate((BuildingResource, int) ressource)
@@ -92,5 +119,15 @@ public class BaseUI : MonoBehaviour
         PlayerPrefs.SetInt("HighScore", count);
         PlayerPrefs.Save();
     }
-
+    public void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 }
