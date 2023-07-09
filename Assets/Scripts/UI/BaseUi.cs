@@ -12,6 +12,7 @@ public class BaseUI : MonoBehaviour
     private Label highScoreCount;
     private Label elementCount;
     private Label skillPoint;
+    private Label liveCount;
     private VisualElement onTruck;
     private Button speedUp;
     private Button carryCapacity;
@@ -34,6 +35,7 @@ public class BaseUI : MonoBehaviour
         scoreCount = uIDocument.rootVisualElement.Q<Label>("ScoreCount");
         elementCount = uIDocument.rootVisualElement.Q<Label>("ElementCount");
         skillPoint = uIDocument.rootVisualElement.Q<Label>("SkillPoint");
+        liveCount = uIDocument.rootVisualElement.Q<Label>("LiveCount");
         onTruck = uIDocument.rootVisualElement.Q<VisualElement>("OnTruck");
         carryCapacity = uIDocument.rootVisualElement.Q<Button>("CarryCapacityUp");
         buildSpeedUp = uIDocument.rootVisualElement.Q<Button>("BuildSpeedButton");
@@ -55,6 +57,7 @@ public class BaseUI : MonoBehaviour
         playerController.PlayerResourceUpdated += OnPlayerResourceUpdate;
         gameManager.OnSkillPointUpdate += OnSkillPointUpdate;
         gameManager.OnScoreUpdate += OnScoreUpdate;
+        gameManager.OnLiveUpdate += OnLiveUpdate;
 
         if (PlayerPrefs.HasKey("HighScore"))
         {
@@ -135,6 +138,10 @@ public class BaseUI : MonoBehaviour
             PlayerPrefs.Save();
         }
        
+    }
+    public void OnLiveUpdate(int count)
+    {
+        liveCount.text = count.ToString();
     }
     public void Awake()
     {

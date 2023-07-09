@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     StorageTile[] stores;
 
     public float actionTime;
-
+    public event System.Action<int> OnLiveUpdate;
     int lives = 10;
     public int Lives { get { return lives; } }
 
@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
             SliderScriptManager.instance.UpdateSlidert(key, timers[key].Item2);
             if (timers[key].Item2 > Time.time) continue;
             lives -= 1;
+            OnLiveUpdate?.Invoke(lives);
             flagForRemoval.Add(key.ToString());
         }
         foreach (string key in flagForRemoval)
