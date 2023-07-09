@@ -95,14 +95,14 @@ public class PlayerController : MonoBehaviour
         {
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = false;
+            spriteRenderer.flipY = true;
             
         }
         else if (movement.y < 0)
         {
             spriteRenderer.sprite = spriteUp;
             spriteRenderer.flipX = false;
-            spriteRenderer.flipY = true;
+            spriteRenderer.flipY = false;
         }
         if (movement.magnitude > 0)
         {

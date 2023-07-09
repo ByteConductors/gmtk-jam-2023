@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  speedModifier: 1
   spriteUp: {fileID: 1054689468, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   spriteRight: {fileID: 2123841751, guid: 1b7ffbfb76e6aaf4eae6c000d97630ff, type: 3}
   extension: 0.3
@@ -324,7 +325,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2373801846943392468}
   - component: {fileID: 764595580654020458}
-  - component: {fileID: 499048567676032140}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -398,11 +398,3 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &499048567676032140
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6897120632127914385}
-  m_Enabled: 1
