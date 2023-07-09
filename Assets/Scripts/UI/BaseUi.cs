@@ -44,7 +44,7 @@ public class BaseUI : MonoBehaviour
         (int, int) res = gameManager.GetUpgardeSpeed();
         speedUp.text = "Speed " + res.Item1 + " (" + res.Item2 + "SP)";
         res = gameManager.GetUpgardeTime();
-        buildSpeedUp.text = "Time " + res.Item1 + " (" + res.Item2 + "SP)";
+        buildSpeedUp.text = "Build Time " + res.Item1 + " (" + res.Item2 + "SP)";
         res = gameManager.GetUpgradeCapasyity();
         carryCapacity.text = "Capacity " + res.Item1 + " (" + res.Item2 + "SP)";
         elementCount.text = curRessources + "/" + res.Item1;

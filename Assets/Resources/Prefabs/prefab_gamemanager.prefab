@@ -48,8 +48,6 @@ MonoBehaviour:
   BUILDING_ACTION_TIME: 2
   stores:
   - {fileID: 11400000, guid: 9ce0bc258dc23624887b9af9b516de53, type: 2}
-  - {fileID: 11400000, guid: d8d23e4aa329a7b4e858298c9dd8d6e0, type: 2}
-  - {fileID: 11400000, guid: 163af68ec34cf83429f8689dfcd3efed, type: 2}
   actionTime: 0
   lives: 10
   phaseTime: 0
