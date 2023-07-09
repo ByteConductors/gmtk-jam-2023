@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     int materials;
     bool first = true;
 
+    float deliveryMultiplier = 1f;
+
     int score;
     public event System.Action<int> OnScoreUpdate;
     static GameManager instance;
@@ -162,7 +164,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Adding timer at:" + v3i2key(position));
         float starttime = Time.time;
-        timers.Add(v3i2key(position), (tile, starttime + deliveryTime));
+        timers.Add(v3i2key(position), (tile, starttime + (deliveryTime * deliveryMultiplier)));
         SliderScriptManager.instance.AddSlider(v3i2key(position), position, starttime);
         Debug.Log("Timer time: " + timers[v3i2key(position)].Item2);
     }
@@ -239,6 +241,7 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curSpeedUpgrades++;
             SpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+            PlayerController.instance.speedModifier += 0.1f;
         }
         return (curSpeedUpgrades, maxSpeedUpgrades);
     }
@@ -251,6 +254,8 @@ public class GameManager : MonoBehaviour
             OnSkillPointUpdate?.Invoke(skillPoints);
             curBuildSpeedUpgrades++;
             BuildSpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+            deliveryMultiplier += 0.1f;
+            
         }
         return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
     }
