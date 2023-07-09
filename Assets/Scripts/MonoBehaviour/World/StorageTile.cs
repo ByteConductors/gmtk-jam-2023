@@ -12,8 +12,10 @@ public class StorageTile : BuildingTile,ICollisionTile
 
     public override void OnPlace()
     {
+
         if (Position == null || Position == new Vector3Int(0,0,0)) return;
         Debug.Log("Storage Position: " + Position);
+        Debug.Log(Position);
         ContextBoubbleManager.instance.showContextBoubble(Position, storedResource.Icon);
     }
 
