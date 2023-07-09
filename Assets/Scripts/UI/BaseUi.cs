@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +11,7 @@ public class BaseUI : MonoBehaviour
     private Label scoreCount;
     private Label highScoreCount;
     private Label elementCount;
+    private Label skillPoint;
     private VisualElement onTruck;
     private Button speedUp;
     private Button carryCapacity;
@@ -18,37 +20,10 @@ public class BaseUI : MonoBehaviour
     private PlayerController playerController;
     private GameManager gameManager;
 
-    public event Action<int> CarryCapacityUpgrade;
-    public event Action<int> BuildSpeedUpgrade;
-    public event Action<int> SpeedUpgrade;
-
-    // MaxUpgarde
-    public int maxCarryCapacityUpgrades;
-    public int maxBuildSpeedUpgrades;
-    public int maxSpeedUpgrades;
-    
-    //Increasement
-    public int carryCapacityUpgradeKostIncreasement;
-    public int buildSpeedUpgradesKostIncreasement;
-    public int speedUpgradesKostIncreasement;
-
-    //Basic Kost
-    public int carryCapacityUpgradeBasicKost;
-    public int BuildSpeedUpgradeBasicKost;
-    public int speedUpgradeBasicKost;
-
-    private int curCarryCapacityUpgrades;
-    private int curBuildSpeedUpgrades;
-    private int curSpeedUpgrades;
-    private int curRessources;
-
+    private int curRessources = 0;
 
     void OnEnable()
     {
-        curCarryCapacityUpgrades = 1;
-        curBuildSpeedUpgrades = 0;
-        curSpeedUpgrades = 0;
-        curRessources = 0;
 
         playerController = PlayerController.instance;
         gameManager = GameManager.Instance;
@@ -58,15 +33,19 @@ public class BaseUI : MonoBehaviour
         highScoreCount = uIDocument.rootVisualElement.Q<Label>("HighscoreCount");
         scoreCount = uIDocument.rootVisualElement.Q<Label>("ScoreCount");
         elementCount = uIDocument.rootVisualElement.Q<Label>("ElementCount");
+        skillPoint = uIDocument.rootVisualElement.Q<Label>("SkillPoint");
         onTruck = uIDocument.rootVisualElement.Q<VisualElement>("OnTruck");
         carryCapacity = uIDocument.rootVisualElement.Q<Button>("CarryCapacityUp");
         buildSpeedUp = uIDocument.rootVisualElement.Q<Button>("BuildSpeedButton");
         speedUp = uIDocument.rootVisualElement.Q<Button>("SpeedUp");
 
-        carryCapacity.text = "Capacity " + carryCapacityUpgradeBasicKost;
-        buildSpeedUp.text = "Time " + BuildSpeedUpgradeBasicKost;
-        speedUp.text = "Speed " + speedUpgradeBasicKost;
-        elementCount.text = curRessources + "/" + curCarryCapacityUpgrades;
+        (int, int) res = gameManager.GetUpgardeSpeed();
+        speedUp.text = "Speed " + res.Item1 + "SP";
+        res = gameManager.GetUpgardeTime();
+        buildSpeedUp.text = "Time " + res.Item1 + "SP";
+        res = gameManager.GetUpgradeCapasyity();
+        carryCapacity.text = "Capacity " + res.Item1 + "SP";
+        elementCount.text = curRessources + "/" + res.Item1;
 
         carryCapacity.RegisterCallback<ClickEvent>(CarryCapacityOnClick);
         buildSpeedUp.RegisterCallback<ClickEvent>(BuildSpeedUpOnClick);
@@ -74,6 +53,7 @@ public class BaseUI : MonoBehaviour
 
 
         playerController.PlayerResourceUpdated += OnPlayerResourceUpdate;
+        gameManager.OnSkillPointUpdate += OnSkillPointUpdate;
         gameManager.OnScoreUpdate += OnScoreUpdate;
 
         if (PlayerPrefs.HasKey("HighScore"))
@@ -84,29 +64,31 @@ public class BaseUI : MonoBehaviour
 
 
     }
+    public void OnSkillPointUpdate(int count)
+    {
+        skillPoint.text = count + "SP";
+    }
     public void CarryCapacityOnClick(ClickEvent env)
     {
-        if (curCarryCapacityUpgrades < maxCarryCapacityUpgrades)
+        (int, int) res = gameManager.UpgardeCapayity();
+        if(res.Item1 != res.Item2)
         {
-            carryCapacity.text = "Capacity " + (carryCapacityUpgradeBasicKost + (carryCapacityUpgradeKostIncreasement * curCarryCapacityUpgrades));
-            curCarryCapacityUpgrades++;
-            CarryCapacityUpgrade?.Invoke(curCarryCapacityUpgrades);
-            elementCount.text = curRessources + "/" + curCarryCapacityUpgrades;
+            carryCapacity.text = "Capacity " + res.Item1 + "SP";
         }
-        if (curCarryCapacityUpgrades == maxCarryCapacityUpgrades)
+        else
         {
             carryCapacity.text = "Max Capacity";
         }
+        elementCount.text = curRessources + "/" + res.Item1;
     }
     public void BuildSpeedUpOnClick(ClickEvent env)
     {
-        if(curBuildSpeedUpgrades < maxBuildSpeedUpgrades) 
+        (int, int) res = gameManager.UpgardeTime();
+        if (res.Item1 != res.Item2)
         {
-            buildSpeedUp.text = "Time " + (BuildSpeedUpgradeBasicKost + (buildSpeedUpgradesKostIncreasement * curBuildSpeedUpgrades));
-            curBuildSpeedUpgrades++;
-            BuildSpeedUpgrade?.Invoke(curBuildSpeedUpgrades);
+            buildSpeedUp.text = "Time " + res.Item1 + "SP";
         }
-        if (curBuildSpeedUpgrades == maxCarryCapacityUpgrades)
+        else
         {
             buildSpeedUp.text = "Max Time";
         }
@@ -114,13 +96,12 @@ public class BaseUI : MonoBehaviour
     }
     public void SpeedUpOnClick(ClickEvent env)
     {
-        if(curSpeedUpgrades < maxSpeedUpgrades) 
+        (int, int) res = gameManager.UpgardeSpeed();
+        if (res.Item1 != res.Item2)
         {
-            speedUp.text = "Speed " + (speedUpgradeBasicKost + (speedUpgradesKostIncreasement * curSpeedUpgrades));
-            curSpeedUpgrades++;
-            SpeedUpgrade?.Invoke(curSpeedUpgrades);
+            speedUp.text = "Speed " + res.Item1 + "SP";
         }
-        if(curSpeedUpgrades == maxSpeedUpgrades)
+        else
         {
             speedUp.text = "Max Speed";
         }
@@ -128,9 +109,17 @@ public class BaseUI : MonoBehaviour
 
     public void OnPlayerResourceUpdate((BuildingResource, int) ressource)
     {
-        onTruck.style.backgroundImage = ressource.Item1.Icon.texture;
+        if(ressource.Item1 != null)
+        {
+            onTruck.style.backgroundImage = new StyleBackground(ressource.Item1.Icon);
+        }
+        else
+        {
+            onTruck.style.backgroundImage = null;
+        }
+        (int, int) res = gameManager.GetUpgradeCapasyity();
         curRessources = ressource.Item2;
-        elementCount.text = curRessources + "/" + curCarryCapacityUpgrades;
+        elementCount.text = curRessources + "/" + res.Item1;
         
     }
 

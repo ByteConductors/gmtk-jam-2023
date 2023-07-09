@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{
+{   
     public static PlayerController instance;
+    private GameManager gameManager;
     public float speed;
     public Sprite spriteUp;
     public Sprite spriteRight;
@@ -34,11 +35,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         velocity = Vector3.zero;
         ressource = null;
-        maxCarry = 4;
+        maxCarry = 1;
 
         Debug.Log("PlayerController Start");
 
@@ -140,9 +142,10 @@ public class PlayerController : MonoBehaviour
 
     public void setResource(BuildingResource resource)
     {
+        maxCarry = gameManager.GetUpgradeCapasyity().Item1;
         this.ressource = resource;
         count = maxCarry;
-        PlayerResourceUpdated?.Invoke((resource, count));
+        PlayerResourceUpdated.Invoke((resource, count));
     }
     public void UseResource()
     {

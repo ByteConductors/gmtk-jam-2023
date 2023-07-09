@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Dynamic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +32,33 @@ public class GameManager : MonoBehaviour
     int tries;
 
     Dictionary<string,(BuildingTile,float)> timers = new Dictionary<string, (BuildingTile, float)>();
+
+    [SerializeField]  int skillPoints = 1000;
+    public event System.Action<int> OnSkillPointUpdate;
+
+    public event System.Action<int> CarryCapacityUpgrade;
+    public event System.Action<int> BuildSpeedUpgrade;
+    public event System.Action<int> SpeedUpgrade;
+
+    // MaxUpgarde
+    public int maxCarryCapacityUpgrades;
+    public int maxBuildSpeedUpgrades;
+    public int maxSpeedUpgrades;
+
+    //Increasement
+    public int carryCapacityUpgradeKostIncreasement;
+    public int buildSpeedUpgradesKostIncreasement;
+    public int speedUpgradesKostIncreasement;
+
+    //Basic Kost
+    public int carryCapacityUpgradeBasicKost;
+    public int BuildSpeedUpgradeBasicKost;
+    public int speedUpgradeBasicKost;
+
+    private int curCarryCapacityUpgrades = 1;
+    private int curBuildSpeedUpgrades = 1;
+    private int curSpeedUpgrades = 1;
+    private int curRessources = 0;
 
     private void Awake()
     {
@@ -164,4 +188,52 @@ public class GameManager : MonoBehaviour
         OnScoreUpdate?.Invoke(score);
     }
 
+    public (int, int) UpgardeCapayity()
+    {
+        int kosten = carryCapacityUpgradeBasicKost + (carryCapacityUpgradeKostIncreasement * (curCarryCapacityUpgrades -1));
+        if (curCarryCapacityUpgrades < maxCarryCapacityUpgrades && skillPoints >= kosten)
+        {
+            skillPoints -= kosten;
+            OnSkillPointUpdate?.Invoke(skillPoints);
+            curCarryCapacityUpgrades++;
+            CarryCapacityUpgrade?.Invoke(curCarryCapacityUpgrades);
+        }
+        return (curCarryCapacityUpgrades, maxCarryCapacityUpgrades);
+    }
+    public (int, int) UpgardeSpeed()
+    {
+        int kosten = speedUpgradeBasicKost + (speedUpgradesKostIncreasement * (curSpeedUpgrades - 1));
+        if (curSpeedUpgrades < maxSpeedUpgrades && skillPoints >= kosten)
+        {
+            skillPoints -= kosten;
+            OnSkillPointUpdate?.Invoke(skillPoints);
+            curSpeedUpgrades++;
+            SpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+        }
+        return (curSpeedUpgrades, maxSpeedUpgrades);
+    }
+    public (int, int) UpgardeTime()
+    {
+        int kosten = BuildSpeedUpgradeBasicKost + (buildSpeedUpgradesKostIncreasement * (curBuildSpeedUpgrades - 1));
+        if (curBuildSpeedUpgrades < maxBuildSpeedUpgrades && skillPoints >= kosten)
+        {
+            skillPoints -= kosten;
+            OnSkillPointUpdate?.Invoke(skillPoints);
+            curBuildSpeedUpgrades++;
+            BuildSpeedUpgrade?.Invoke(curCarryCapacityUpgrades);
+        }
+        return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
+    }
+    public (int, int) GetUpgardeTime()
+    {
+        return (curBuildSpeedUpgrades, maxBuildSpeedUpgrades);
+    }
+    public (int, int) GetUpgardeSpeed()
+    {
+        return (curSpeedUpgrades, maxSpeedUpgrades);
+    }
+    public (int, int) GetUpgradeCapasyity()
+    {
+        return (curCarryCapacityUpgrades, maxCarryCapacityUpgrades);
+    }
 }

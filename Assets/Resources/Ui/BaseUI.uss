@@ -39,3 +39,7 @@
 
 .slabel {
 }
+.no-background
+{
+    background-image: none;
+}
