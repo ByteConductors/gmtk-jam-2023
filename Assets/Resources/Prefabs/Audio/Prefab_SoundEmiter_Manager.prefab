@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundEmitterPrefab: {fileID: 7062651130522534163, guid: ebb3f30377ed5384da4b57d73b21bb5e, type: 3}
+  audioMixer: {fileID: 24100000, guid: 27f58e471b368f34db4813c0a4bd653d, type: 2}
