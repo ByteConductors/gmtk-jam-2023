@@ -59,6 +59,7 @@ public class LevelManager : MonoBehaviour
     public void BuildBuilding(BuildingTile building, Vector3Int position)
     {
         buildingPositions.Add(position);
+        building.Position = position;
         var constrution = ScriptableObject.CreateInstance<ConstructionSiteTile>();
         constrution.SetBuilding(building, position);
         var actions = new List<PointerAction>
@@ -85,9 +86,9 @@ public class LevelManager : MonoBehaviour
         PointerController.Instance.QueueActions(actions);
     }
 
-    public void UpdateTile(TileBase tile, Vector3Int position)
+    public void UpdateTile(BuildingTile tile, Vector3Int position)
     {
-        if (tile.GetType() == typeof(BuildingTile)) ((BuildingTile)tile).OnPlace();
+        tile.OnPlace();
         buildingMap.SetTile(position, tile);
     }
 

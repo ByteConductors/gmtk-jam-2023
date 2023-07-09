@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -56,7 +57,9 @@ public class GameManager : MonoBehaviour
         if (itterations == STOREHOUSE_BUILD_ITTERATIONS)
         {
             itterations = 0;
-            BuildBuildings(stores[Random.Range(0,Mathf.Min(materials,stores.Length))]);
+            var store = stores[Random.Range(0, Mathf.Min(materials, stores.Length))];
+            var instance = ScriptableObject.CreateInstance<StorageTile>().CloneContents(store);
+            BuildBuildings(instance);
             matIttertations++;
         }
         if (matIttertations == STOREHOUSE_MATERIAL_ITTERATIONS) {
